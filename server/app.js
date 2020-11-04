@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const cors = require('cors');
 const apiRoutes = require('./routes/apiRoutes');
+const Restaurants = require('./models/restaurant');
 
 dotenv.config();
 
@@ -27,6 +28,11 @@ mongoose.connect(
 );
 
 app.use('/api', apiRoutes);
+
+// app.get('/restaurants', async (req, res) => {
+//     const data = await Restaurants.find({ cuisines: 'Indian' });
+//     res.send(data);
+// });
 
 app.listen(5000, () => {
     console.log('Server live on port 5000');
