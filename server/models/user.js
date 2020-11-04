@@ -8,7 +8,8 @@ const restaurantSchema = new Schema({
     email: { type: String, required: true },
     password: { type: String },
     orders: { type: Array, default: [] },
-    payments: { type: Object, default: {} }
+    payments: { type: Object, default: {} },
+    cart: { type: Object, default: {} }
 });
 
 module.exports = mongoose.model('restaurants', restaurantSchema);
