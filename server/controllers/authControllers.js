@@ -1,7 +1,7 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const dotenv = require('dotenv');
-//const User = require('../models/User');
+const User = require('../models/user');
 
 dotenv.config();
 
@@ -18,7 +18,8 @@ const registerController = async (req, res) => {
             );
             // change to handle first name, last name, email and password
             const user = new User({
-                name: req.body.name,
+                firstName: req.body.firstName,
+                lastName: req.body.lastName,
                 email: req.body.email,
                 password: hashedPassword
             });
