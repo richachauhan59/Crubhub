@@ -6,7 +6,31 @@ const restaurantSchema = new Schema({
     logo: { type: String },
     bannerImage: { type: String },
     searchImage: { type: String },
-    address: { type: Object },
+    address: {
+        type: {
+            type: String,
+            enum: ['Point']
+        },
+        coordinates: {
+            type: [Number], //array of numbers, longitude first
+            index: '2dsphere'
+        },
+        address_country: {
+            type: String
+        },
+        address_locality: {
+            type: String
+        },
+        address_region: {
+            type: String
+        },
+        postal_code: {
+            type: String
+        },
+        street_address: {
+            type: String
+        }
+    },
     cuisines: { type: Array },
     delivery: { type: Object },
     pickup: { type: Object },
