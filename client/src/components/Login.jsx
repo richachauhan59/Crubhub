@@ -50,7 +50,7 @@ export default function Login() {
                         cssClass={styles.facebookButton}
                     />
                     <GoogleLogin
-                        clientId="658977310896-knrl3gka66fldh83dao2rhgbblmd4un9.apps.googleusercontent.com"
+                        clientId="68681624345-nj1lkl9qpgprcb9vc8hmphb9igu6fl17.apps.googleusercontent.com"
                         render={(renderProps) => (
                             <button
                                 className={styles.googleButton}
