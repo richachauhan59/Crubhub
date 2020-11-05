@@ -6,7 +6,6 @@ import Signup from '../components/Signup';
 import Dashboard from '../components/Dashboard';
 import { useSelector } from 'react-redux';
 
-
 export default function Routes() {
     const { authToken } = useSelector((state) => state.auth);
     return (
@@ -17,8 +16,16 @@ export default function Routes() {
                     exact
                     render={(props) => <Home {...props}></Home>}
                 ></Route>
-                <Route path="/login" render={() => <Login></Login>}></Route>
-                <Route path="/signup" render={() => <Signup></Signup>}></Route>
+                <Route
+                    path="/signup"
+                    render={() =>
+                        authToken === '' ? (
+                            <Signup />
+                        ) : (
+                            <Redirect to="/lets-eat" />
+                        )
+                    }
+                ></Route>
                 <Route
                     path="/login"
                     render={() =>

@@ -5,6 +5,9 @@ import {
     LOGIN_LOADING,
     LOGIN_SUCCESS,
     LOGIN_FAILURE,
+    OAUTH_LOADING,
+    OAUTH_SUCCESS,
+    OAUTH_FAILURE,
     LOGOUT
 } from './actionTypes';
 
@@ -22,7 +25,9 @@ const initialState = {
     loginloading: false,
     loginError: '',
     registerloading: false,
-    registerError: ''
+    registerError: '',
+    oauthError: '',
+    oauthLoading: false
 };
 
 const reducer = (state = initialState, action) => {
@@ -66,6 +71,25 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 loginLoading: false,
                 loginError: action.payload
+            };
+        case OAUTH_LOADING:
+            return {
+                ...state,
+                oauthLoading: true
+            };
+        case OAUTH_SUCCESS:
+            localStorage.setItem('user', JSON.stringify(action.payload));
+            return {
+                ...state,
+                oauthLoading: false,
+                oauthError: '',
+                ...action.payload
+            };
+        case OAUTH_FAILURE:
+            return {
+                ...state,
+                oauthLoading: false,
+                oauthError: action.payload
             };
         case LOGOUT: {
             //resets localStorage and state

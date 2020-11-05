@@ -5,7 +5,7 @@ import GoogleLogin from 'react-google-login';
 import Checkbox from '@material-ui/core/Checkbox';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { loginUser } from '../redux/auth/actions';
+import { loginUser, oauthLogin } from '../redux/auth/actions';
 import { useHistory } from 'react-router';
 import FacebookIcon from '@material-ui/icons/Facebook';
 
@@ -25,7 +25,14 @@ export default function Login() {
     };
 
     const responseGoogle = (response) => {
-        //dispatch()
+        const { profileObj } = response;
+        dispatch(
+            oauthLogin({
+                firstName: profileObj.givenName,
+                lastName: profileObj.familyName,
+                email: profileObj.email
+            })
+        );
     };
 
     const failedGoogle = (error) => {
@@ -33,7 +40,18 @@ export default function Login() {
     };
 
     const responseFacebook = (response) => {
-        console.log(response);
+        if (response.status === 'unknown') {
+            console.log(response);
+        } else {
+            const [firstName, ...lastName] = response.name.split(' ');
+            dispatch(
+                oauthLogin({
+                    firstName,
+                    lastName: lastName.join(' '),
+                    email: response.email
+                })
+            );
+        }
     };
 
     return (

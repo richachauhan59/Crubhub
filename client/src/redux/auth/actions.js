@@ -5,6 +5,9 @@ import {
     LOGIN_LOADING,
     LOGIN_SUCCESS,
     LOGIN_FAILURE,
+    OAUTH_LOADING,
+    OAUTH_SUCCESS,
+    OAUTH_FAILURE,
     LOGOUT
 } from './actionTypes';
 
@@ -29,7 +32,8 @@ export const registerUser = (data) => (dispatch) => {
     return axios({
         method: 'post',
         url: 'http://localhost:5000/api/register',
-        data: data
+        data: data,
+        headers: { 'content-type': 'application/json' }
     })
         .then((res) => dispatch(registerSuccess(res.data.message)))
         .catch((err) => dispatch(registerFailure(err.response.data)));
@@ -54,10 +58,37 @@ export const loginUser = (data) => (dispatch) => {
     return axios({
         method: 'post',
         url: 'http://localhost:5000/api/login',
-        data
+        data,
+        headers: { 'content-type': 'application/json' }
     })
         .then((res) => dispatch(loginSuccess(res.data)))
         .catch((err) => dispatch(loginFailure(err.response.data)));
+};
+
+export const oauthLoading = () => ({
+    type: OAUTH_LOADING
+});
+
+export const oauthSuccess = (payload) => ({
+    type: OAUTH_SUCCESS,
+    payload
+});
+
+export const oauthFailure = (payload) => ({
+    type: OAUTH_FAILURE,
+    payload
+});
+
+export const oauthLogin = (data) => (dispatch) => {
+    dispatch(oauthLoading());
+    return axios({
+        method: 'post',
+        url: 'http://localhost:5000/api/Oauth',
+        data,
+        headers: { 'content-type': 'application/json' }
+    })
+        .then((res) => dispatch(oauthSuccess(res.data)))
+        .catch((err) => dispatch(oauthFailure(err.response.data)));
 };
 
 export const logout = () => ({

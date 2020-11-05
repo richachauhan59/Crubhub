@@ -88,4 +88,51 @@ const loginController = async (req, res) => {
     }
 };
 
-module.exports = { registerController, loginController };
+const OauthController = async (req, res) => {
+    try {
+        const user = await User.findOne({ email: req.body.email });
+
+        const authToken = jwt.sign(
+            { email: req.body.email },
+            process.env.JWT_SECRET,
+            {}
+        );
+
+        if (!user) {
+            const newUser = new User({
+                firstName: req.body.firstName,
+                lastName: req.body.lastName,
+                email: req.body.email,
+                password: 'undefined'
+            });
+
+            const savedUser = await newUser.save();
+
+            res.status(200).json({
+                firstName: savedUser['_doc'].firstName,
+                lastName: savedUser['_doc'].lastName,
+                email: savedUser['_doc'].email,
+                address: savedUser['_doc'].address,
+                orders: savedUser['_doc'].orders,
+                payments: savedUser['_doc'].payments,
+                cart: savedUser['_doc'].cart,
+                authToken
+            });
+        } else {
+            res.json({
+                firstName: user['_doc'].firstName,
+                lastName: user['_doc'].lastName,
+                email: user['_doc'].email,
+                address: user['_doc'].address,
+                orders: user['_doc'].orders,
+                payments: user['_doc'].payments,
+                cart: user['_doc'].cart,
+                authToken
+            });
+        }
+    } catch (error) {
+        return res.status(400).send(error.message);
+    }
+};
+
+module.exports = { registerController, loginController, OauthController };
