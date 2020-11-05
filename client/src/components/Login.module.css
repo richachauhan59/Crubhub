@@ -1,0 +1,76 @@
+.signInText {
+  font-family: esti;
+  text-align: left;
+}
+
+.mainCard {
+  width: 400px;
+  box-shadow: 0 0 0 1px rgba(67, 41, 163, 0.08),
+    0 1px 5px 0 rgba(67, 41, 163, 0.08);
+  border-radius: 4px;
+  margin: 30px auto;
+}
+
+.utility {
+  display: flex;
+  margin-top: 7px;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.input {
+  margin-top: 5px;
+  height: 33px;
+  font-size: 20px;
+  padding: 5px;
+  border: 1px solid #6b6b83;
+  border-radius: 4px;
+  border-color: #fb6100;
+  outline: none;
+}
+
+.placeholder {
+  margin-top: 10px;
+  text-align: left;
+  color: #6b6b83;
+  font-weight: 470;
+  font-size: 15px;
+}
+
+.button {
+  font-family: esti;
+  background-color: #e62434;
+  border: none;
+  border-radius: 4px;
+  padding: 10px;
+  color: white;
+  margin: 20px 0px 10px 0px;
+  font-size: 17px;
+  font-weight: 400;
+}
+
+.facebookButton {
+  font-family: esti;
+  background-color: #3b5998;
+  border: none;
+  border-radius: 4px;
+  padding: 10px;
+  color: white;
+  margin: 10px 0;
+  font-size: 17px;
+  font-weight: 400;
+  width: 100%;
+}
+
+.googleButton {
+  font-family: esti;
+  background-color: #4285f4;
+  border: none;
+  border-radius: 4px;
+  padding: 10px;
+  color: white;
+  margin: 10px 0;
+  font-size: 17px;
+  font-weight: 400;
+  width: 100%;
+}
