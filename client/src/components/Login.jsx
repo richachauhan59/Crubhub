@@ -2,6 +2,7 @@ import React from 'react'
 import styles from "./Login.module.css"
 import FacebookLogin from 'react-facebook-login';
 import GoogleLogin from 'react-google-login';
+import Checkbox from '@material-ui/core/Checkbox';
 
 export default function Login() {
     return (
@@ -16,7 +17,12 @@ export default function Login() {
                         <input type="password" className={styles.input} ></input>
                         <div className={styles.utility}>
                             <div style={{ display: "flex", alignItems: "center" }}>
-                                <input type="checkbox" style={{ height: "28px", width: "28px", marginLeft: "-4px" }} ></input>
+                                <Checkbox
+                                    defaultChecked
+                                    style={{ color: "#6b6b83", marginLeft: "-11px" }}
+                                    inputProps={{ 'aria-label': 'secondary checkbox' }}
+                                />
+                                {/* <input type="checkbox" style={{ height: "28px", width: "28px", marginLeft: "-4px" }} ></input> */}
                                 <div style={{ fontSize: "15px", color: "#6b6b83" }}>Keep me signed in</div>
                             </div>
                             <div>
@@ -28,7 +34,6 @@ export default function Login() {
                     <div>or</div>
                     <FacebookLogin
                         appId="374855257050311"
-                        autoLoad={true}
                         fields="name,email,picture"
                         cssClass={styles.facebookButton}
                     />
@@ -40,7 +45,7 @@ export default function Login() {
                         buttonText="Login"
                         cookiePolicy={'single_host_origin'}
                     />
-                    <div style={{ marginTop: "15px", marginBottom: "40px" }}>
+                    <div style={{ marginTop: "15px", marginBottom: "30px" }}>
                         <a style={{ textDecoration: "none", color: "#0070eb", fontSize: "15px", fontWeight: "500" }} href="https://www.google.com" >Create your account</a>
                     </div>
                 </div>
