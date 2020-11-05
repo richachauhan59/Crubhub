@@ -151,7 +151,7 @@ export class home extends Component {
                                             <input placeholder="1111" />
                                         </div>
                                         
-                                        <button type="button" className="btn btn-primary button_input">Find food</button>
+                                        <button type="button" className="btn btn-primary button_input">Count me in!</button>
 
                                 </div>
                                 <div className="col">
@@ -190,10 +190,10 @@ export class home extends Component {
                                 <div className="col">
                                     <ul style={{ listStyle: "none" }}>
                                         <li><b>Partner with us</b></li>
-                                        <li><button type="button" class="btn btn-outline-primary text-white">For restaurent</button></li>
-                                        <li><button type="button" class="btn btn-outline-primary">For drivers</button></li>
-                                        <li><button type="button" class="btn btn-outline-primary">For corporate accounts</button></li>
-                                        <li><button type="button" class="btn btn-outline-primary">Become an Affiliate</button></li>
+                                        <li><button type="button" class="btn btn-outline-light my-2 text-white">For restaurent</button></li>
+                                        <li><button type="button" class="btn btn-outline-light my-2 text-white">For drivers</button></li>
+                                        <li><button type="button" class="btn btn-outline-light my-2 text-white">For corporate accounts</button></li>
+                                        <li><button type="button" class="btn btn-outline-light my-2 text-white">Become an Affiliate</button></li>
                                     </ul>
                                 </div>
                             </div>
