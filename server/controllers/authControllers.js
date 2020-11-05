@@ -11,12 +11,11 @@ const registerController = async (req, res) => {
         return res.status(400).send('Email already registered');
     }
     try {
-        if (req.body.password) {
+        if (req.body.password && req.body.password !== '') {
             const hashedPassword = await bcrypt.hash(
                 req.body.password,
                 await bcrypt.genSalt(10)
             );
-            // change to handle first name, last name, email and password
             const user = new User({
                 firstName: req.body.firstName,
                 lastName: req.body.lastName,
@@ -25,16 +24,16 @@ const registerController = async (req, res) => {
             });
 
             const savedUser = await user.save();
-            res.send(savedUser);
-        } else {
-            // register with google/facebook token
-            const user = new User({
-                name: req.body.name,
-                email: req.body.email
-            });
 
-            const savedUser = await user.save();
-            res.send(savedUser);
+            const authToken = jwt.sign(
+                { email: savedUser.email },
+                process.env.JWT_SECRET,
+                {}
+            );
+
+            res.status(200).json({ ...savedUser, authToken });
+        } else {
+            res.status(400).send('Password is required');
         }
     } catch (err) {
         res.status(400).send(err.message);
@@ -42,13 +41,19 @@ const registerController = async (req, res) => {
 };
 
 const loginController = async (req, res) => {
+    if (req.body.email === '') {
+        return res.status(400).send('Email is required');
+    }
+    if (req.body.password === '') {
+        return res.status(400).send('Password is required');
+    }
     try {
         const user = await User.findOne({ email: req.body.email });
         if (!user) {
             return res.status(400).send('Email is not registered');
         }
 
-        if (req.body.password) {
+        if (req.body.password && req.body.email) {
             const validPass = await bcrypt.compare(
                 req.body.password,
                 user.password
@@ -61,9 +66,22 @@ const loginController = async (req, res) => {
                 process.env.JWT_SECRET,
                 {}
             );
-            res.json({ ...user['_doc'], authToken });
+            res.json({
+                firstName: user['_doc'].firstName,
+                lastName: user['_doc'].lastName,
+                email: user['_doc'].email,
+                address: user['_doc'].address,
+                orders: user['_doc'].orders,
+                payments: user['_doc'].payments,
+                cart: user['_doc'].cart,
+                authToken
+            });
         } else {
-            //login with google/facebook token
+            if (!req.body.password) {
+                res.status(400).send('Password is required');
+            } else {
+                res.status(400).send('Email is required');
+            }
         }
     } catch (err) {
         return res.status(400).send(err.message);
