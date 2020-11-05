@@ -1,11 +1,29 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styles from './Login.module.css';
 import FacebookLogin from 'react-facebook-login';
 import GoogleLogin from 'react-google-login';
 import Checkbox from '@material-ui/core/Checkbox';
+import { useDispatch, useSelector } from 'react-redux';
+import { loginUser } from '../redux/auth/actions';
+import { useHistory } from 'react-router';
 
 export default function Login() {
     document.title = 'Sign In to Crubhub | Order Online | Crubhub';
+
+    const dispatch = useDispatch();
+    const history = useHistory();
+
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const { authToken } = useSelector((state) => state.auth);
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        dispatch(loginUser({ email, password }));
+    };
+
+    const responseGoogle = () => {};
+
     return (
         <div>
             <div className={styles.mainCard}>
@@ -13,20 +31,51 @@ export default function Login() {
                     <h2 className={styles.signInText}>
                         Sign in with your Crubhub account
                     </h2>
-                    <form style={{ display: 'flex', flexDirection: 'column' }}>
+                    <form
+                        onSubmit={handleSubmit}
+                        style={{ display: 'flex', flexDirection: 'column' }}
+                    >
                         <div className={styles.placeholder}>Email</div>
-                        <input type="email" className={styles.input}></input>
+                        <input
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            type="email"
+                            className={styles.input}
+                        ></input>
                         <div className={styles.placeholder}>Password</div>
-                        <input type="password" className={styles.input}></input>
+                        <input
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            type="password"
+                            className={styles.input}
+                        ></input>
                         <div className={styles.utility}>
-                            <div style={{ display: "flex", alignItems: "center" }}>
+                            <div
+                                style={{
+                                    display: 'flex',
+                                    alignItems: 'center'
+                                }}
+                            >
                                 <Checkbox
                                     defaultChecked
-                                    style={{ color: "#6b6b83", marginLeft: "-11px" }}
-                                    inputProps={{ 'aria-label': 'secondary checkbox' }}
+                                    style={{
+                                        color: '#0070eb',
+                                        marginLeft: '-11px',
+                                        marginRight: '-5px'
+                                    }}
+                                    inputProps={{
+                                        'aria-label': 'secondary checkbox'
+                                    }}
                                 />
                                 {/* <input type="checkbox" style={{ height: "28px", width: "28px", marginLeft: "-4px" }} ></input> */}
-                                <div style={{ fontSize: "15px", color: "#6b6b83" }}>Keep me signed in</div>
+                                <div
+                                    style={{
+                                        fontSize: '15px',
+                                        color: '#6b6b83'
+                                    }}
+                                >
+                                    Keep me signed in
+                                </div>
                             </div>
                             <div>
                                 <a
@@ -41,7 +90,9 @@ export default function Login() {
                                 </a>
                             </div>
                         </div>
-                        <button className={styles.button}>Sign in</button>
+                        <button type="submit" className={styles.button}>
+                            Sign in
+                        </button>
                     </form>
                     <div>or</div>
                     <FacebookLogin
@@ -60,6 +111,8 @@ export default function Login() {
                                 Login with Google
                             </button>
                         )}
+                        onSuccess={responseGoogle}
+                        onFailure={responseGoogle}
                         buttonText="Login"
                         cookiePolicy={'single_host_origin'}
                     />
