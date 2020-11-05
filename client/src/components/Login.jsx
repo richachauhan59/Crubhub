@@ -4,20 +4,17 @@ import FacebookLogin from 'react-facebook-login';
 import GoogleLogin from 'react-google-login';
 import Checkbox from '@material-ui/core/Checkbox';
 import { Link } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { loginUser, oauthLogin } from '../redux/auth/actions';
-import { useHistory } from 'react-router';
 import FacebookIcon from '@material-ui/icons/Facebook';
 
 export default function Login() {
     document.title = 'Sign In to Crubhub | Order Online | Crubhub';
 
     const dispatch = useDispatch();
-    const history = useHistory();
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const { authToken } = useSelector((state) => state.auth);
 
     const handleSubmit = (e) => {
         e.preventDefault();

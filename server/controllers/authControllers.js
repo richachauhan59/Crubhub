@@ -31,7 +31,16 @@ const registerController = async (req, res) => {
                 {}
             );
 
-            res.status(200).json({ ...savedUser, authToken });
+            res.status(200).json({
+                firstName: savedUser['_doc'].firstName,
+                lastName: savedUser['_doc'].lastName,
+                email: savedUser['_doc'].email,
+                address: savedUser['_doc'].address,
+                orders: savedUser['_doc'].orders,
+                payments: savedUser['_doc'].payments,
+                cart: savedUser['_doc'].cart,
+                authToken
+            });
         } else {
             res.status(400).send('Password is required');
         }

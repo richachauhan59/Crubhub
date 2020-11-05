@@ -35,7 +35,7 @@ export const registerUser = (data) => (dispatch) => {
         data: data,
         headers: { 'content-type': 'application/json' }
     })
-        .then((res) => dispatch(registerSuccess(res.data.message)))
+        .then((res) => dispatch(registerSuccess(res.data)))
         .catch((err) => dispatch(registerFailure(err.response.data)));
 };
 
