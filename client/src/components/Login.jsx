@@ -3,6 +3,7 @@ import styles from './Login.module.css';
 import FacebookLogin from 'react-facebook-login';
 import GoogleLogin from 'react-google-login';
 import Checkbox from '@material-ui/core/Checkbox';
+import { Link } from "react-router-dom"
 import { useDispatch, useSelector } from 'react-redux';
 import { loginUser } from '../redux/auth/actions';
 import { useHistory } from 'react-router';
@@ -67,15 +68,8 @@ export default function Login() {
                                         'aria-label': 'secondary checkbox'
                                     }}
                                 />
-                                {/* <input type="checkbox" style={{ height: "28px", width: "28px", marginLeft: "-4px" }} ></input> */}
-                                <div
-                                    style={{
-                                        fontSize: '15px',
-                                        color: '#6b6b83'
-                                    }}
-                                >
-                                    Keep me signed in
-                                </div>
+                                <div style={{ fontSize: "15px", color: "#6b6b83" }}>Keep me signed in</div>
+
                             </div>
                             <div>
                                 <a
@@ -117,17 +111,12 @@ export default function Login() {
                         cookiePolicy={'single_host_origin'}
                     />
                     <div style={{ marginTop: '15px', marginBottom: '35px' }}>
-                        <a
-                            style={{
-                                textDecoration: 'none',
-                                color: '#0070eb',
-                                fontSize: '15px',
-                                fontWeight: '500'
-                            }}
-                            href="https://www.google.com"
-                        >
-                            Create your account
-                        </a>
+                        <Link to="/signup" style={{
+                            textDecoration: 'none',
+                            color: '#0070eb',
+                            fontSize: '15px',
+                            fontWeight: '500'
+                        }} >Create your account</Link>
                     </div>
                 </div>
             </div>
