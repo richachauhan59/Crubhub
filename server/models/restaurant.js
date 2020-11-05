@@ -42,7 +42,7 @@ const restaurantSchema = new Schema({
     deliveryFee: { type: Number },
     premium: { type: Boolean },
     minDelivery: { type: Number },
-    menu: { type: Array },
+    menu_category_list: { type: Array },
     reviews: { type: Array }
 });
 

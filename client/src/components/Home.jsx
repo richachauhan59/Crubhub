@@ -50,7 +50,7 @@ export class home extends Component {
                                 <div className="col"></div>
                                 <div className="col"></div>
                                 <div className="col" style={{ color: "#0271EB", fontSize: "20.3px", lineHeight: "1.44359" }}><b>Get Perks in the app</b></div>
-                                <div className="col" style={{ color: "#0271EB", fontSize: "20.3px", lineHeight: "1.44359" }}><b>Sign in</b></div>
+                                <div onClick={() => this.props.history.push('/login')} className="col" style={{ color: "#0271EB", fontSize: "20.3px", lineHeight: "1.44359", cursor: 'pointer' }}><b>Sign in</b></div>
                             </div>
                             <div className="row mt-5 my-5" style={{ marginTop: "100px" }}>
                                 <div className="col-8 "><h1 style={{ fontSize: "3vw", fontWeight: "400px" }}><b>Order food delivery <br /> you’ll love</b></h1></div>
