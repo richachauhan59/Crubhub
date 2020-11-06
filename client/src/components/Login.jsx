@@ -140,7 +140,7 @@ export default function Login() {
                         <FacebookIcon
                             style={{
                                 position: 'absolute',
-                                top: 'calc(50% - 15px)',
+                                top: 'calc(50% - 17.5px)',
                                 left: '5.6px',
                                 fontSize: '36px',
                                 color: 'white'
@@ -162,7 +162,7 @@ export default function Login() {
                             alt=""
                             style={{
                                 position: 'absolute',
-                                top: 'calc(50% - 16px)',
+                                top: 'calc(50% - 18px)',
                                 left: '5.6px',
                                 height: '38px',
                                 color: 'white'
