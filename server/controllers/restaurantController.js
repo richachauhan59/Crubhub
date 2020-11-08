@@ -7,6 +7,8 @@ const restaurantSearch = async (req, res) => {
             .status(400)
             .send('Search location is required to find restaurants');
     }
+
+    // There's probably a better way to do this.
     if (req.body.cuisine) {
         const data = await Restaurants.aggregate([
             {
