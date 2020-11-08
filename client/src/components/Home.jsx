@@ -216,6 +216,7 @@ const useStyles = makeStyles((theme) => ({
         border: 'none',
         fontSize: 'large',
         height: '46px',
+        transition: 'all 0.3s ease',
         '&:hover': {
             backgroundColor: '#0058b8',
             cursor: 'pointer'

@@ -181,7 +181,6 @@ export default function Login() {
                             )}
                             onSuccess={responseGoogle}
                             onFailure={failedGoogle}
-                            buttonText="Login"
                             cookiePolicy={'single_host_origin'}
                         />
                     </div>
