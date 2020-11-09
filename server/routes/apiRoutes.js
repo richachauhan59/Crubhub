@@ -7,15 +7,21 @@ const {
     loginController,
     OauthController
 } = require('../controllers/authControllers');
+const {
+    restaurantSearch,
+    restaurantDetails
+} = require('../controllers/restaurantController');
 
 const router = express.Router();
 
-router.use(bodyParser.json());
 router.use(bodyParser.urlencoded({ extended: true }));
+router.use(express.json());
 
 router.post('/register', registerController);
 router.post('/login', loginController);
 router.post('/Oauth', OauthController);
+router.post('/search', restaurantSearch);
+router.get('/restaurant/:id', restaurantDetails);
 //router.use(authenticationToken);
 
 module.exports = router;

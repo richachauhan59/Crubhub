@@ -16,3 +16,19 @@ Content-Type: application/json
     "password": "123456"
 }
 ###
+GET http://localhost:5000/api/search
+Content-Type: application/json
+
+{
+    "geometry": { "type": "Point", "coordinates": [-73.99279, 40.719296] },
+    "cuisine": "Indian"
+}
+###
+POST http://localhost:5000/api/search
+Content-Type: application/json
+
+{
+    "geometry": { "type": "Point", "coordinates": [-73.99279, 40.719296] }
+}
+###
+GET http://localhost:5000/api/restaurant/5fa1b41c6e6e3ca4f225e9b0

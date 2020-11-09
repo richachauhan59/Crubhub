@@ -15,7 +15,13 @@ export default function Routes() {
                 <Route
                     path="/"
                     exact
-                    render={(props) => <Home {...props}></Home>}
+                    render={(props) =>
+                        authToken === '' ? (
+                            <Home {...props}></Home>
+                        ) : (
+                            <Redirect to="/lets-eat" />
+                        )
+                    }
                 ></Route>
                 <Route
                     path="/signup"

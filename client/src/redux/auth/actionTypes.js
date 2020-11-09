@@ -7,4 +7,5 @@ export const LOGIN_FAILURE = 'LOGIN_FAILURE';
 export const OAUTH_LOADING = 'OAUTH_LOADING';
 export const OAUTH_SUCCESS = 'OAUTH_SUCCESS';
 export const OAUTH_FAILURE = 'OAUTH_FAILURE';
+export const SET_ADDRESS = 'SET_ADDRESS';
 export const LOGOUT = 'LOGOUT';

@@ -8,6 +8,7 @@ import {
     OAUTH_LOADING,
     OAUTH_SUCCESS,
     OAUTH_FAILURE,
+    SET_ADDRESS,
     LOGOUT
 } from './actionTypes';
 
@@ -90,6 +91,12 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 oauthLoading: false,
                 oauthError: action.payload
+            };
+        case SET_ADDRESS:
+            const place = action.payload.place_name.split(', ');
+            return {
+                ...state,
+                address: { place, geometry: action.payload.geometry }
             };
         case LOGOUT: {
             //resets localStorage and state
