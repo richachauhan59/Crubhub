@@ -8,6 +8,7 @@ import {
     OAUTH_LOADING,
     OAUTH_SUCCESS,
     OAUTH_FAILURE,
+    SET_ADDRESS,
     LOGOUT
 } from './actionTypes';
 
@@ -90,6 +91,11 @@ export const oauthLogin = (data) => (dispatch) => {
         .then((res) => dispatch(oauthSuccess(res.data)))
         .catch((err) => dispatch(oauthFailure(err.response.data)));
 };
+
+export const setAddress = (payload) => ({
+    type: SET_ADDRESS,
+    payload
+});
 
 export const logout = () => ({
     type: LOGOUT,

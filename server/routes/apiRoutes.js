@@ -14,13 +14,13 @@ const {
 
 const router = express.Router();
 
-router.use(bodyParser.json());
 router.use(bodyParser.urlencoded({ extended: true }));
+router.use(express.json());
 
 router.post('/register', registerController);
 router.post('/login', loginController);
 router.post('/Oauth', OauthController);
-router.get('/search', restaurantSearch);
+router.post('/search', restaurantSearch);
 router.get('/restaurant/:id', restaurantDetails);
 //router.use(authenticationToken);
 
