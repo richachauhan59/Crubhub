@@ -4,6 +4,11 @@
         url(../fonts/GT-Eesti-Display-Bold-Trial.woff2) format('woff2');
 }
 
+@font-face {
+    font-family: 'graphik';
+    src: url(../fonts/Graphik-Font-Family/GraphikRegular.otf) format('opentype');
+}
+
 .signInText {
     font-family: esti;
     text-align: left;
