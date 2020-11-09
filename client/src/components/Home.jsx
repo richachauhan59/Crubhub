@@ -348,7 +348,7 @@ function Home() {
     const [searchInput, setSearchInput] = useState('');
 
     const findFood = (e) => {
-        console.log(searchInput);
+        // console.log(searchInput);
         dispatch(setAddress(searchInput));
         dispatch(getSearchResults(searchInput.geometry));
     };

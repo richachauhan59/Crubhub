@@ -2,7 +2,6 @@ const mongoose = require('mongoose');
 const Restaurants = require('../models/restaurant');
 
 const restaurantSearch = async (req, res) => {
-    console.log(req.body);
     if (!req.body.geometry) {
         return res
             .status(400)

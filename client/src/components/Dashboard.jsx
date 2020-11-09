@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
-import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import InfoIcon from '@material-ui/icons/Info';
 import AccessTimeIcon from '@material-ui/icons/AccessTime';
 import RoomIcon from '@material-ui/icons/Room';
 import SearchIcon from '@material-ui/icons/Search';
 import axios from 'axios';
+import { useDispatch } from 'react-redux';
+import { setAddress } from '../redux/auth/actions';
+import { getSearchResults } from '../redux/search/actions';
 
 const useStyles = makeStyles((theme) => ({
     footerWrapper: {
@@ -300,13 +302,41 @@ function Dashboard() {
         'Food Delivery | Restaurant Takeout | Order Food Online | Crubhub';
 
     const classes = useStyles();
+    const dispatch = useDispatch();
 
     const [delOrPick, setDelOrPick] = useState('delivery');
     const [options, setOptions] = useState([]);
     const [searchInput, setSearchInput] = useState('');
+    const [valueText, setValueText] = useState('');
+    const [cuisineInput, setCuisineInput] = useState('');
+
+    const handleInputChange = (value) => {
+        setSearchInput(value);
+        axios({
+            method: 'get',
+            url: `https://api.mapbox.com/geocoding/v5/mapbox.places/${value}.json`,
+            params: {
+                access_token:
+                    'pk.eyJ1IjoicmljaGFjaGF1aGFuIiwiYSI6ImNraDF0NmMxdTAzeDMyem9pZWtpMmZiY2UifQ.sGlBM0QPBIFTFgLP_Bl_gg'
+            }
+        })
+            .then((res) => {
+                setOptions(res.data.features);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    };
 
     const findFood = (e) => {
-        console.log(searchInput);
+        // console.log(searchInput);
+        dispatch(setAddress(searchInput));
+        const data = { geometry: searchInput.geometry };
+        if (cuisineInput) {
+            data['cuisine'] =
+                cuisineInput[0].toUpperCase() + cuisineInput.slice(1);
+        }
+        dispatch(getSearchResults(data));
     };
     return (
         <div>
@@ -424,13 +454,40 @@ function Dashboard() {
                                     color: '#0070eb'
                                 }}
                             />
-                            <input
-                                style={{
-                                    border: 'none',
-                                    height: '100%',
-                                    width: '100%'
+                            <Autocomplete
+                                freeSolo
+                                options={options.map(
+                                    (place) => place.place_name
+                                )}
+                                onChange={(event, value) => {
+                                    setSearchInput(() =>
+                                        options.find(
+                                            (place) =>
+                                                place.place_name === value
+                                        )
+                                    );
+                                    setValueText(value);
                                 }}
-                                placeholder="Enter street address ..."
+                                renderInput={(params) => (
+                                    <div ref={params.InputProps.ref}>
+                                        <input
+                                            style={{
+                                                border: 'none',
+                                                height: '100%',
+                                                width: '100%'
+                                            }}
+                                            {...params.inputProps}
+                                            value={valueText}
+                                            placeholder="Enter street address ..."
+                                            onChange={(e) => {
+                                                setValueText(e.target.value);
+                                                handleInputChange(
+                                                    e.target.value
+                                                );
+                                            }}
+                                        />
+                                    </div>
+                                )}
                             />
                         </div>
                         <div
@@ -455,6 +512,10 @@ function Dashboard() {
                                     height: '100%',
                                     width: '100%'
                                 }}
+                                value={cuisineInput}
+                                onChange={(e) =>
+                                    setCuisineInput(e.target.value)
+                                }
                                 placeholder="Pizza, sushi, c ..."
                             />
                         </div>
