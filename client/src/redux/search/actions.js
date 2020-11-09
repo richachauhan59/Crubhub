@@ -25,11 +25,10 @@ export const searchResultsFailure = (payload) => ({
 export const getSearchResults = (data) => {
     return (dispatch) => {
         dispatch(searchResultsLoading());
-        console.log(data);
         return axios({
             method: 'POST',
             url: 'http://localhost:5000/api/search',
-            data: { geometry: data },
+            data,
             headers: { 'Content-type': 'application/json' }
         })
             .then((res) => dispatch(searchResultsSuccess(res.data)))
