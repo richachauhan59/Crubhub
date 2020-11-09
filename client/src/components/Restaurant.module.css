@@ -1,0 +1,31 @@
+.marginLeft {
+  margin-left: 10px;
+}
+
+.accuracyFont {
+  font-size: 12px;
+}
+
+.accuracyNumber {
+  font-family: "esti";
+}
+
+.logo {
+  object-fit: contain;
+  width: 100px;
+  max-height: 100px;
+  box-shadow: 0 0 0 1px rgba(67, 41, 163, 0.08),
+    0 1px 5px 0 rgba(67, 41, 163, 0.08);
+  position: absolute;
+  bottom: -50px;
+  right: 17%;
+  border-radius: 5px;
+}
+
+.blue {
+  color: #0070eb;
+}
+
+.esti {
+  font-family: "esti";
+}
