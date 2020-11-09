@@ -49,7 +49,7 @@ const useStyles = makeStyles((theme) => ({
     width:"30%",
     margin:"1%"
   },
-  forBoldText:{
+  forBold:{
       fontWeight:"900",
       fontSize:"x-large",
       margin : "1%"
@@ -95,7 +95,7 @@ export default function Payment() {
 
         <form noValidate autoComplete="off">
         <Grid item xs={12}>
-            <Typography className={classes.forBoldText} >Contact</Typography>
+            <Typography className={classes.forBold} >Contact</Typography>
             <TextField className={classes.inputBox} variant="outlined" />
             <TextField className={classes.inputBox} variant="outlined" />
             <TextField className={classes.inputBox} variant="outlined" />
@@ -104,14 +104,14 @@ export default function Payment() {
             <p>By providing your phone number, you consent to receive text
              messages from Grubhub related to your order.<br/> Standard message
              rates may apply. See our Terms of Use for more information.</p>
-            <Typography className={classes.forBoldText} >Address</Typography>
+            <Typography className={classes.forBold} >Address</Typography>
             <TextField className={classes.inputBoxAdd} label="Address(Requred)" variant="outlined" />
             <TextField className={classes.inputBoxAdd} label="Apt., suite, floor, etc." variant="outlined" />
             <TextField className={classes.inputBoxAdd} label="Cross Street" variant="outlined" />
             <TextField className={classes.inputBoxAdd} label="City(Required)" variant="outlined" />
             <TextField className={classes.inputBoxAdd} label="" variant="outlined" />
             <TextField className={classes.inputBoxAdd} label="Zip Code(required)" variant="outlined" />
-            <Typography className={classes.forBoldText} >Delivery instructions</Typography>
+            <Typography className={classes.forBold} >Delivery instructions</Typography>
             <TextField style={{width:"98%"}} variant="outlined" label="Leave info for your driver here (e.g. Ring bell and leave bag on doorstep). For food instructions (e.g. more ketchup!), make a note in the related menu item." />
             <div className={`${classes.root} ${classes.forBtnDiv}`} >
                 <button className={classes.forBtn} >Home</button>
