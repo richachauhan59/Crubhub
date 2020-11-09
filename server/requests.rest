@@ -24,7 +24,7 @@ Content-Type: application/json
     "cuisine": "Indian"
 }
 ###
-GET http://localhost:5000/api/search
+POST http://localhost:5000/api/search
 Content-Type: application/json
 
 {

@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import axios from 'axios';
+import { getSearchResults } from '../redux/search/actions';
+import { setAddress } from '../redux/auth/actions';
 
 const features = [
     {
@@ -339,12 +342,15 @@ const useStyles = makeStyles((theme) => ({
 
 function Home() {
     const classes = useStyles();
+    const dispatch = useDispatch();
 
     const [options, setOptions] = useState([]);
     const [searchInput, setSearchInput] = useState('');
 
     const findFood = (e) => {
         console.log(searchInput);
+        dispatch(setAddress(searchInput));
+        dispatch(getSearchResults(searchInput.geometry));
     };
 
     const handleInputChange = (value) => {
@@ -463,8 +469,14 @@ function Home() {
                 </Grid>
             </Grid>
             <Grid container className={classes.featuresWrapper}>
-                {features.map((feature) => (
-                    <Grid item xs={12} md={4} className={classes.features}>
+                {features.map((feature, index) => (
+                    <Grid
+                        key={index}
+                        item
+                        xs={12}
+                        md={4}
+                        className={classes.features}
+                    >
                         <img src={feature.image} alt="" />
                         <h4>{feature.heading}</h4>
                         <p>{feature.description}</p>
@@ -600,8 +612,8 @@ function Home() {
                             'Careers',
                             'Investor relations',
                             'News'
-                        ].map((linkName) => (
-                            <button className={classes.footerLink}>
+                        ].map((linkName, index) => (
+                            <button key={index} className={classes.footerLink}>
                                 {linkName}
                             </button>
                         ))}
@@ -618,15 +630,18 @@ function Home() {
                             'Student discounts',
                             'Keyboard Shortcuts',
                             'Answers'
-                        ].map((linkName) => (
-                            <button className={classes.footerLink}>
+                        ].map((linkName, index) => (
+                            <button key={index} className={classes.footerLink}>
                                 {linkName}
                             </button>
                         ))}
                         <h4 className={classes.footerTitle}>Connect with us</h4>
                         {['Facebook', 'Twitter', 'Instagram', 'YouTube'].map(
-                            (linkName) => (
-                                <button className={classes.footerLink}>
+                            (linkName, index) => (
+                                <button
+                                    key={index}
+                                    className={classes.footerLink}
+                                >
                                     {linkName}
                                 </button>
                             )
@@ -639,8 +654,9 @@ function Home() {
                             'For drivers',
                             'For corporate accounts',
                             'Become Affiliate'
-                        ].map((linkName) => (
+                        ].map((linkName, index) => (
                             <button
+                                key={index}
                                 className={classes.footerLink}
                                 style={{
                                     padding: '10px 15px',
@@ -718,6 +734,7 @@ function Home() {
                             'See more'
                         ].map((linkName, index) => (
                             <button
+                                key={index}
                                 className={classes.footerLink}
                                 style={{
                                     fontFamily:
@@ -758,7 +775,7 @@ function Home() {
                             'Tempe restaurants',
                             'Washington, DC restaurants'
                         ].map((linkName, index) => (
-                            <button className={classes.footerLink}>
+                            <button key={index} className={classes.footerLink}>
                                 {linkName}
                             </button>
                         ))}
@@ -794,6 +811,7 @@ function Home() {
                             'Show More'
                         ].map((linkName, index) => (
                             <button
+                                key={index}
                                 className={classes.footerLink}
                                 style={{
                                     fontFamily:
@@ -820,6 +838,7 @@ function Home() {
                             'Restaurants by Dish'
                         ].map((linkName, index) => (
                             <button
+                                key={index}
                                 className={classes.footerLink}
                                 style={{ textDecoration: 'underline' }}
                             >
