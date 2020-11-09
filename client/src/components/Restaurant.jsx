@@ -161,7 +161,7 @@ export default function Restaurant() {
 
                             </div>
                             <div style={{ border: "0.5px solid #e2dff1", marginTop: "20px" }}></div>
-                            <div style={{ color: "#0070eb", marginTop: "10px", marginLeft: "10px" }}>see the full schedule</div>
+                            <div style={{ color: "#0070eb", marginTop: "10px", marginLeft: "10px" }}>See the full schedule</div>
                         </div>
 
                     </div>
