@@ -5,6 +5,7 @@ import Login from '../components/Login';
 import Signup from '../components/Signup';
 import Dashboard from '../components/Dashboard';
 import { useSelector } from 'react-redux';
+import Restaurant from '../components/Restaurant';
 
 export default function Routes() {
     const { authToken } = useSelector((state) => state.auth);
@@ -22,8 +23,8 @@ export default function Routes() {
                         authToken === '' ? (
                             <Signup />
                         ) : (
-                            <Redirect to="/lets-eat" />
-                        )
+                                <Redirect to="/lets-eat" />
+                            )
                     }
                 ></Route>
                 <Route
@@ -32,8 +33,8 @@ export default function Routes() {
                         authToken === '' ? (
                             <Login />
                         ) : (
-                            <Redirect to="/lets-eat" />
-                        )
+                                <Redirect to="/lets-eat" />
+                            )
                     }
                 ></Route>
                 <Route
@@ -42,10 +43,11 @@ export default function Routes() {
                         authToken !== '' ? (
                             <Dashboard />
                         ) : (
-                            <Redirect to="/login" />
-                        )
+                                <Redirect to="/login" />
+                            )
                     }
                 ></Route>
+                <Route path="/restaurant" render={() => <Restaurant></Restaurant>} ></Route>
             </Switch>
         </div>
     );
