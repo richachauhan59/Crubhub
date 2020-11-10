@@ -7,15 +7,12 @@ import Toolbar from '@material-ui/core/Toolbar';
 import List from '@material-ui/core/List';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItem from '@material-ui/core/ListItem'
 import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
 import {TextField} from "@material-ui/core"
-import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
+import Box from '@material-ui/core/Box'
 
 const drawerWidth = 240;
 
@@ -29,11 +26,11 @@ const useStyles = makeStyles((theme) => ({
     marginRight: drawerWidth,
   },
   drawer: {
-    width: drawerWidth,
-    flexShrink: 0,
+    width: "450px"
   },
   drawerPaper: {
-    width: drawerWidth,
+    width: "450px",
+    postion:"relative"
   },
   toolbar: theme.mixins.toolbar,
   content: {
@@ -43,15 +40,16 @@ const useStyles = makeStyles((theme) => ({
   },
   inputBox: {
       width: "50%",
-      margin : "1%"
+      margin : "1%",
+      fontFamily:"esti"
   },
   inputBoxAdd:{
     width:"30%",
     margin:"1%"
   },
   forBold:{
-      fontWeight:"900",
       fontSize:"x-large",
+      fontFamily:"esti",
       margin : "1%"
     },
   forBtnDiv:{
@@ -76,6 +74,10 @@ const useStyles = makeStyles((theme) => ({
 export default function Payment() {
   const classes = useStyles();
 
+  let Mozzarella_Sticks = 8
+  let Waffel_fries = 10
+  let total = Mozzarella_Sticks + Waffel_fries + 5+5
+  
   return (
     <div className={classes.root}>
       <CssBaseline />
@@ -118,7 +120,7 @@ export default function Payment() {
                 <button className={classes.forBtn} >Work</button>
                 <button className={classes.forBtn} >Other</button>
             </div>
-            <div><button style={{marginTop:"20px", width:"90%", background:"#0271EB",height:"55px", color:"white",fontWeight:"bolder",fontSize:"large" }} >Contact</button></div>
+            <div><button style={{marginTop:"20px", width:"90%", background:"#0271EB",height:"55px", color:"white",fontFamily:"esti",fontSize:"large" }} >Continue to Payment method</button></div>
         </form>
       </main>
       <Drawer
@@ -132,14 +134,32 @@ export default function Payment() {
         <div className={classes.toolbar} />
         <Divider />
         <List>
-          {['invite friends'].map((text, index) => (
+          {['invite friends and order together'].map((text, index) => (
             <ListItem button key={text}>
-                <PersonAddIcon/>
+              <PersonAddIcon/>
               <ListItemText primary={text} />
             </ListItem>
           ))}
         </List>
-      </Drawer>
+        <hr/>
+        <div style={{margin:"20px"}}>
+              <Typography style={{fontFamily:"esti"}}>Your Order from</Typography>
+              <Typography style={{fontFamily:"Raleway", color:"blue"}}>Ritz Dinner</Typography>
+        </div>
+        <div style={{margin:"20px"}}>
+          <div style={{lineHeight:"50px"}}><span>1  Waffel fries</span><span style={{float:"right"}}>{Mozzarella_Sticks}$</span></div><hr/>
+          <div style={{lineHeight:"50px"}}><span>1  Mozzarella Sticks</span><span style={{float:"right"}}>{Waffel_fries}$</span></div><hr/>
+        </div>
+        <div style={{margin:"20px"}}>
+          <div><span>item subtotal</span><span style={{float:"right"}}>{Mozzarella_Sticks + Waffel_fries}$</span></div>
+          <div><span>Delivery fee</span><span style={{float:"right"}}>5$</span></div>
+          <div><span>tax and fee</span><span style={{float:"right"}}>5$</span></div>
+          <div style={{fontFamily:"esti", lineHeight:"50px"}}><span >total</span><span style={{float:"right"}}>{total}$</span></div>
+        </div>
+        <div style={{width:"100%" ,position:"absolute", bottom:"0", left:"0", background:"#545470", height:"60px",display:"flex", padding:"10px", justifyContent:"space-between", alignItems:"center", color:"white", fontFamily:"esti", fontSize:"20px"}}>
+          <span>Total</span> <span style={{float:"right"}}>{total}$</span>
+        </div>
+        </Drawer>
     </div>
   );
 }
