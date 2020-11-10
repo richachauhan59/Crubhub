@@ -65,7 +65,7 @@ const instance = new Razorpay({
 const createPaymentInstance = (req, res) => {
     const options = {
         amount: req.body.amount * 100,
-        currency: 'INR',
+        currency: 'USD',
         receipt: uuidv4(),
         payment_capture: 0
     };
@@ -83,7 +83,7 @@ const capturePaymentId = (req, res) => {
                 url: `https://${process.env.RAZOR_PAY_KEY_ID}:${process.env.RAZOR_PAY_KEY_SECRET}@api.razorpay.com/v1/payments/${req.params.paymentId}/capture`,
                 form: {
                     amount: req.body.amount * 100,
-                    currency: 'INR'
+                    currency: 'USD'
                 }
             },
             async function (err, response, body) {
