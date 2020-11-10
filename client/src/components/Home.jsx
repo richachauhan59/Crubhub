@@ -350,7 +350,7 @@ function Home() {
     const findFood = (e) => {
         // console.log(searchInput);
         dispatch(setAddress(searchInput));
-        dispatch(getSearchResults(searchInput.geometry));
+        dispatch(getSearchResults({ geometry: searchInput.geometry }));
     };
 
     const handleInputChange = (value) => {
