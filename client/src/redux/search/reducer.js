@@ -30,7 +30,8 @@ export default function reducer(state = initialState, action) {
             return {
                 ...state,
                 searchResultsLoading: false,
-                searchResults: action.payload
+                searchResults: action.payload,
+                searchResultsError: ''
             };
         case RESTAURANT_DETAILS_LOADING:
             return { ...state, restaurantDetailsLoading: true };
@@ -44,7 +45,8 @@ export default function reducer(state = initialState, action) {
             return {
                 ...state,
                 restaurantDetailsLoading: false,
-                restaurantDetails: action.payload
+                restaurantDetails: action.payload,
+                restaurantDetailsError: ''
             };
         default:
             return state;
