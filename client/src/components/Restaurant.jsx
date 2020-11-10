@@ -323,6 +323,8 @@ export default function Restaurant() {
                                 </div>
                             </div>
                         </div>
+                    </div>
+                    <div style={{ marginTop: '35px', textAlign: 'left' }}>
                         <div style={{ marginTop: '35px' }}>
                             <h1 className={styles.esti}>FAQs</h1>
                             <div style={{ marginTop: '20px' }}>

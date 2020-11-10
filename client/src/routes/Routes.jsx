@@ -6,6 +6,7 @@ import Signup from '../components/Signup';
 import Dashboard from '../components/Dashboard';
 import { useSelector } from 'react-redux';
 import Restaurant from '../components/Restaurant';
+import SearchPage from '../components/searchPage/SearchPage';
 
 export default function Routes() {
     const { authToken } = useSelector((state) => state.auth);
@@ -19,8 +20,8 @@ export default function Routes() {
                         authToken === '' ? (
                             <Home {...props}></Home>
                         ) : (
-                            <Redirect to="/lets-eat" />
-                        )
+                                <Redirect to="/lets-eat" />
+                            )
                     }
                 ></Route>
                 <Route
@@ -54,6 +55,7 @@ export default function Routes() {
                     }
                 ></Route>
                 <Route path="/restaurant" render={() => <Restaurant></Restaurant>} ></Route>
+                <Route path="/search" render={() => <SearchPage></SearchPage>}></Route>
             </Switch>
         </div>
     );
