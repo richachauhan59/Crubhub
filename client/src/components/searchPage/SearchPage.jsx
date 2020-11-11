@@ -285,7 +285,7 @@ export default function SearchPage() {
 
                 {/* right side of the page */}
 
-                <div style={{ width: '85%' }}>
+                <div style={{ width: '80%' }}>
                     <div style={{ margin: '20px' }}>
                         <Grid
                             item
@@ -361,7 +361,7 @@ export default function SearchPage() {
                                     borderRadius: '50%',
                                     border: '1px solid #ddd',
                                     top: '30%',
-                                    left: '0px',
+                                    left: '10px',
                                     backgroundColor: 'white',
                                     display: 'flex',
                                     alignItems: 'center',
@@ -386,7 +386,7 @@ export default function SearchPage() {
                                     border: '1px solid #ddd',
                                     top: '30%',
                                     transform: 'scale(1.5)',
-                                    left: '1230px',
+                                    left: '1150px',
                                     backgroundColor: 'white',
                                     display: 'flex',
                                     alignItems: 'center',

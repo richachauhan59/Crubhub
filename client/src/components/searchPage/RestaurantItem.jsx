@@ -31,18 +31,25 @@ export default function RestaurantItem({ details }) {
                         {details.is_new ? 'New' : ''}
                     </div>
                 </div>
-                <div style={{ marginLeft: '20px', width: '20%' }}>
+                <div style={{ marginLeft: '20px', width: 'max-content' }}>
                     <Rating
                         name="read-only"
                         readOnly
                         value={details.rating.value}
                         precision={0.1}
                     />
-                    <div style={{ color: '#6b6b83' }}>
-                        {details.rating.count}
+                    <div
+                        style={{
+                            color: '#6b6b83',
+                            fontFamily: 'sans serif',
+                            fontSize: '14px',
+                            textAlign: 'center'
+                        }}
+                    >
+                        {details.rating.count} ratings
                     </div>
                 </div>
-                <div style={{ marginLeft: '40px' }}>
+                <div style={{ marginLeft: '200px' }}>
                     <h3 style={{ fontFamily: 'esti' }}>
                         {details.avgDeliveryTime} -{' '}
                         {details.avgDeliveryTime + 10}

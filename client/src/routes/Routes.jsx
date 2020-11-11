@@ -9,7 +9,7 @@ import Restaurant from '../components/Restaurant';
 import SearchPage from '../components/searchPage/SearchPage';
 import PaymentPage from '../components/payment/Payment';
 
-export default function Routes() {
+export default function Routes(props) {
     const { authToken } = useSelector((state) => state.auth);
     return (
         <div>
@@ -27,9 +27,9 @@ export default function Routes() {
                 ></Route>
                 <Route
                     path="/signup"
-                    render={() =>
+                    render={(props) =>
                         authToken === '' ? (
-                            <Signup />
+                            <Signup {...props} />
                         ) : (
                             <Redirect to="/lets-eat" />
                         )
@@ -37,9 +37,9 @@ export default function Routes() {
                 ></Route>
                 <Route
                     path="/login"
-                    render={() =>
+                    render={(props) =>
                         authToken === '' ? (
-                            <Login />
+                            <Login {...props} />
                         ) : (
                             <Redirect to="/lets-eat" />
                         )
@@ -47,9 +47,9 @@ export default function Routes() {
                 ></Route>
                 <Route
                     path="/lets-eat"
-                    render={() =>
+                    render={(props) =>
                         authToken !== '' ? (
-                            <Dashboard />
+                            <Dashboard {...props} />
                         ) : (
                             <Redirect to="/login" />
                         )
@@ -57,13 +57,17 @@ export default function Routes() {
                 ></Route>
                 <Route
                     path="/restaurant"
-                    render={() => <Restaurant></Restaurant>}
+                    render={(props) => <Restaurant {...props}></Restaurant>}
                 ></Route>
                 <Route
                     path="/search"
-                    render={() => <SearchPage></SearchPage>}
+                    render={(props) => <SearchPage {...props}></SearchPage>}
                 ></Route>
                 <Route exact path="/checkout" render={() => <PaymentPage />} />
+                <Route
+                    path="*"
+                    render={() => <h1>404 Page Not Found</h1>}
+                ></Route>
             </Switch>
         </div>
     );
