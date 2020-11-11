@@ -6,6 +6,7 @@ import Rating from '@material-ui/lab/Rating';
 import styles from './Restaurant.module.css';
 import Grid from '@material-ui/core/Grid';
 import MenuItem from './MenuItem';
+import { Modal } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
     footerWrapper: {
@@ -45,6 +46,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Restaurant() {
     const classes = useStyles();
+
     return (
         <React.Fragment>
             <div>
