@@ -66,10 +66,9 @@ const useStyles = makeStyles((theme) => ({
       background:"#0271EB",
       color:"white"
     }
-    // for bold : esti
-    // for normal: Raleway
   }
 }));
+
 
 export default function Payment() {
   const classes = useStyles();
