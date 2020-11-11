@@ -1,12 +1,13 @@
 import React from 'react';
 import { Route, Switch, Redirect } from 'react-router';
+import { useSelector } from 'react-redux';
 import Home from '../components/Home';
 import Login from '../components/Login';
 import Signup from '../components/Signup';
 import Dashboard from '../components/Dashboard';
-import { useSelector } from 'react-redux';
 import Restaurant from '../components/Restaurant';
 import SearchPage from '../components/searchPage/SearchPage';
+import PaymentPage from '../components/payment/Payment';
 
 export default function Routes() {
     const { authToken } = useSelector((state) => state.auth);
@@ -20,8 +21,8 @@ export default function Routes() {
                         authToken === '' ? (
                             <Home {...props}></Home>
                         ) : (
-                                <Redirect to="/lets-eat" />
-                            )
+                            <Redirect to="/lets-eat" />
+                        )
                     }
                 ></Route>
                 <Route
@@ -30,8 +31,8 @@ export default function Routes() {
                         authToken === '' ? (
                             <Signup />
                         ) : (
-                                <Redirect to="/lets-eat" />
-                            )
+                            <Redirect to="/lets-eat" />
+                        )
                     }
                 ></Route>
                 <Route
@@ -40,8 +41,8 @@ export default function Routes() {
                         authToken === '' ? (
                             <Login />
                         ) : (
-                                <Redirect to="/lets-eat" />
-                            )
+                            <Redirect to="/lets-eat" />
+                        )
                     }
                 ></Route>
                 <Route
@@ -50,12 +51,19 @@ export default function Routes() {
                         authToken !== '' ? (
                             <Dashboard />
                         ) : (
-                                <Redirect to="/login" />
-                            )
+                            <Redirect to="/login" />
+                        )
                     }
                 ></Route>
-                <Route path="/restaurant" render={() => <Restaurant></Restaurant>} ></Route>
-                <Route path="/search" render={() => <SearchPage></SearchPage>}></Route>
+                <Route
+                    path="/restaurant"
+                    render={() => <Restaurant></Restaurant>}
+                ></Route>
+                <Route
+                    path="/search"
+                    render={() => <SearchPage></SearchPage>}
+                ></Route>
+                <Route exact path="/checkout" render={() => <PaymentPage />} />
             </Switch>
         </div>
     );

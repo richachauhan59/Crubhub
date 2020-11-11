@@ -9,7 +9,9 @@ const {
 } = require('../controllers/authControllers');
 const {
     restaurantSearch,
-    restaurantDetails
+    restaurantDetails,
+    createPaymentInstance,
+    capturePaymentId
 } = require('../controllers/restaurantController');
 
 const router = express.Router();
@@ -22,6 +24,8 @@ router.post('/login', loginController);
 router.post('/Oauth', OauthController);
 router.post('/search', restaurantSearch);
 router.get('/restaurant/:id', restaurantDetails);
+router.post('/order', createPaymentInstance);
+router.post('/capture/:paymentId', capturePaymentId);
 //router.use(authenticationToken);
 
 module.exports = router;
