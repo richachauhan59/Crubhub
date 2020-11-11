@@ -3,12 +3,14 @@ import { Checkbox } from '@material-ui/core';
 import Rating from '@material-ui/lab/Rating';
 import Slider from '@material-ui/core/Slider';
 import RestaurantItem from "./RestaurantItem"
+import Navbar from '../navbar/Navbar';
 
-export default function SearchPage() {
+export default function SearchPage(props) {
     return (
         <div>
+            <Navbar {...props}></Navbar>
             <div style={{ display: "flex" }}>
-                <div style={{ width: "25%", padding: "20px", boxShadow: "0 0 0 1px rgba(67,41,163,.1),0 1px 8px 0 rgba(67,41,163,.1)" }}>
+                <div style={{ width: "32%", padding: "20px", boxShadow: "0px 1px 8px 0px rgba(67,41,163,.1)" }}>
                     <div style={{ display: "flex", alignItems: "center" }}>
                         <h2 style={{ fontFamily: "esti" }}>Filters</h2>
                         <div style={{ marginLeft: "20px", color: "#0070eb", fontFamily: "raleway" }}>Clear all</div>

@@ -7,8 +7,9 @@ import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { registerUser, oauthLogin } from '../redux/auth/actions';
 import FacebookIcon from '@material-ui/icons/Facebook';
+import Navbar from './navbar/Navbar';
 
-export default function Login() {
+export default function Login(props) {
     document.title = 'Sign In to Crubhub | Order Online | Crubhub';
 
     const dispatch = useDispatch();
@@ -55,6 +56,7 @@ export default function Login() {
 
     return (
         <div>
+            <Navbar {...props}></Navbar>
             <div className={styles.mainCard}>
                 <div style={{ padding: '10px 30px' }}>
                     <h2 className={styles.signInText}>Create your account</h2>
