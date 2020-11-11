@@ -340,7 +340,8 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-function Home() {
+function Home(props) {
+
     const classes = useStyles();
     const dispatch = useDispatch();
 
@@ -348,7 +349,7 @@ function Home() {
     const [searchInput, setSearchInput] = useState('');
 
     const findFood = (e) => {
-        // console.log(searchInput);
+        localStorage.setItem("location", JSON.stringify(searchInput))
         dispatch(setAddress(searchInput));
         dispatch(getSearchResults(searchInput.geometry));
     };
