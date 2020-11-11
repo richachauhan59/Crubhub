@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
-import Autocomplete from '@material-ui/lab/Autocomplete';
 import InfoIcon from '@material-ui/icons/Info';
+import Autocomplete from '@material-ui/lab/Autocomplete';
 import AccessTimeIcon from '@material-ui/icons/AccessTime';
 import RoomIcon from '@material-ui/icons/Room';
 import SearchIcon from '@material-ui/icons/Search';
@@ -10,6 +10,7 @@ import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import { setAddress } from '../redux/auth/actions';
 import { getSearchResults } from '../redux/search/actions';
+import { useHistory } from 'react-router';
 
 const useStyles = makeStyles((theme) => ({
     footerWrapper: {
@@ -303,6 +304,7 @@ function Dashboard() {
 
     const classes = useStyles();
     const dispatch = useDispatch();
+    const history = useHistory();
 
     const [delOrPick, setDelOrPick] = useState('delivery');
     const [options, setOptions] = useState([]);
@@ -337,6 +339,9 @@ function Dashboard() {
                 cuisineInput[0].toUpperCase() + cuisineInput.slice(1);
         }
         dispatch(getSearchResults(data));
+        setTimeout(() => {
+            history.push('/search');
+        }, 600);
     };
     return (
         <div>

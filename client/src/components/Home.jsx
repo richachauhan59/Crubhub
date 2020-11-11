@@ -7,6 +7,7 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import axios from 'axios';
 import { getSearchResults } from '../redux/search/actions';
 import { setAddress } from '../redux/auth/actions';
+import { useHistory } from 'react-router';
 
 const features = [
     {
@@ -343,6 +344,7 @@ const useStyles = makeStyles((theme) => ({
 function Home() {
     const classes = useStyles();
     const dispatch = useDispatch();
+    const history = useHistory();
 
     const [options, setOptions] = useState([]);
     const [searchInput, setSearchInput] = useState('');
@@ -351,6 +353,9 @@ function Home() {
         // console.log(searchInput);
         dispatch(setAddress(searchInput));
         dispatch(getSearchResults({ geometry: searchInput.geometry }));
+        setTimeout(() => {
+            history.push('/search');
+        }, 600);
     };
 
     const handleInputChange = (value) => {
