@@ -1,5 +1,11 @@
 const mongoose = require('mongoose');
 const Restaurants = require('../models/restaurant');
+const { v4: uuidv4 } = require('uuid');
+const Razorpay = require('razorpay');
+const request = require('request');
+const dotenv = require('dotenv');
+
+dotenv.config();
 
 const restaurantSearch = async (req, res) => {
     if (!req.body.geometry) {
@@ -51,4 +57,54 @@ const restaurantDetails = async (req, res) => {
     }
 };
 
-module.exports = { restaurantSearch, restaurantDetails };
+const instance = new Razorpay({
+    key_id: process.env.RAZOR_PAY_KEY_ID,
+    key_secret: process.env.RAZOR_PAY_KEY_SECRET
+});
+
+const createPaymentInstance = (req, res) => {
+    const options = {
+        amount: req.body.amount * 100,
+        currency: 'USD',
+        receipt: uuidv4(),
+        payment_capture: 0
+    };
+    instance.orders
+        .create(options)
+        .then((order) => res.status(200).json(order))
+        .catch((err) => res.status(500).json({ message: err.message }));
+};
+
+const capturePaymentId = (req, res) => {
+    try {
+        return request(
+            {
+                method: 'POST',
+                url: `https://${process.env.RAZOR_PAY_KEY_ID}:${process.env.RAZOR_PAY_KEY_SECRET}@api.razorpay.com/v1/payments/${req.params.paymentId}/capture`,
+                form: {
+                    amount: req.body.amount * 100,
+                    currency: 'USD'
+                }
+            },
+            async function (err, response, body) {
+                if (err) {
+                    return res.status(500).json({
+                        message: 'Error: Something Went Wrong'
+                    });
+                }
+                return res.status(200).json(response);
+            }
+        );
+    } catch (err) {
+        return res.status(500).json({
+            message: 'Something Went Wrong'
+        });
+    }
+};
+
+module.exports = {
+    restaurantSearch,
+    restaurantDetails,
+    createPaymentInstance,
+    capturePaymentId
+};

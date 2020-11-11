@@ -1,12 +1,13 @@
 import React from 'react';
 import { Route, Switch, Redirect } from 'react-router';
+import { useSelector } from 'react-redux';
 import Home from '../components/Home';
 import Login from '../components/Login';
 import Signup from '../components/Signup';
 import Dashboard from '../components/Dashboard';
-import { useSelector } from 'react-redux';
 import Restaurant from '../components/Restaurant';
 import SearchPage from '../components/searchPage/SearchPage';
+import PaymentPage from '../components/payment/Payment';
 
 export default function Routes(props) {
     const { authToken } = useSelector((state) => state.auth);
@@ -20,8 +21,8 @@ export default function Routes(props) {
                         authToken === '' ? (
                             <Home {...props}></Home>
                         ) : (
-                                <Redirect to="/lets-eat" />
-                            )
+                            <Redirect to="/lets-eat" />
+                        )
                     }
                 ></Route>
                 <Route
@@ -30,8 +31,8 @@ export default function Routes(props) {
                         authToken === '' ? (
                             <Signup {...props} />
                         ) : (
-                                <Redirect to="/lets-eat" />
-                            )
+                            <Redirect to="/lets-eat" />
+                        )
                     }
                 ></Route>
                 <Route
@@ -40,8 +41,8 @@ export default function Routes(props) {
                         authToken === '' ? (
                             <Login {...props} />
                         ) : (
-                                <Redirect to="/lets-eat" />
-                            )
+                            <Redirect to="/lets-eat" />
+                        )
                     }
                 ></Route>
                 <Route
@@ -50,13 +51,14 @@ export default function Routes(props) {
                         authToken !== '' ? (
                             <Dashboard {...props} />
                         ) : (
-                                <Redirect to="/login" />
-                            )
+                            <Redirect to="/login" />
+                        )
                     }
                 ></Route>
                 <Route path="/restaurant" render={(props) => <Restaurant {...props}></Restaurant>} ></Route>
                 <Route path="/search" render={(props) => <SearchPage {...props}></SearchPage>}></Route>
                 <Route path="*" render={() => <h1>404 Page Not Found</h1>}></Route>
+                <Route exact path="/checkout" render={() => <PaymentPage />} />
             </Switch>
         </div>
     );
