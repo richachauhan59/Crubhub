@@ -7,6 +7,7 @@ import styles from './Restaurant.module.css';
 import Grid from '@material-ui/core/Grid';
 import MenuItem from './MenuItem';
 import { Modal } from '@material-ui/core';
+import Navbar from './navbar/Navbar';
 
 const useStyles = makeStyles((theme) => ({
     footerWrapper: {
@@ -44,12 +45,13 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-export default function Restaurant() {
+export default function Restaurant(props) {
     const classes = useStyles();
 
     return (
         <React.Fragment>
             <div>
+                <Navbar {...props}></Navbar>
                 <div style={{ position: 'relative' }}>
                     <img
                         style={{ width: '100%', position: 'relative' }}
@@ -176,7 +178,8 @@ export default function Restaurant() {
                     style={{
                         margin: '0px auto',
                         borderBottom: '1.5px solid #e2dff1',
-                        padding: '4px 0 12px 0'
+                        padding: '4px 0 12px 0',
+                        textAlign: "center"
                     }}
                 >
                     Delivery ASAP (30-40m)
