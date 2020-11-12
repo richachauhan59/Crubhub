@@ -172,7 +172,7 @@ export default function Payment(props) {
                         <Typography className={classes.forBold}>Address</Typography>
                         <TextField
                             className={classes.inputBoxAdd}
-                            label="Address(Requred)"
+                            label="Address(Required)"
                             variant="outlined"
                         />
                         <TextField

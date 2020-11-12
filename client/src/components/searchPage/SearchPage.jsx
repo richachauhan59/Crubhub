@@ -71,6 +71,7 @@ export default function SearchPage(props) {
         }
     };
 
+
     return (
         <div>
             <Navbar {...props}></Navbar>
