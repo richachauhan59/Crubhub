@@ -1,5 +1,6 @@
 import React from 'react';
 import Rating from '@material-ui/lab/Rating';
+import { Link } from "react-router-dom"
 
 export default function RestaurantItem({ details }) {
     return (
@@ -18,9 +19,12 @@ export default function RestaurantItem({ details }) {
                     alt="resitem"
                 ></img>
                 <div style={{ marginLeft: '20px', width: '45%' }}>
-                    <h3 style={{ fontFamily: 'esti', textAlign: 'left' }}>
-                        {details.name}
-                    </h3>
+                    <Link style={{ textDecoration: "none", color: "black" }} to="/restaurant">
+                        <h3 style={{ fontFamily: 'esti', textAlign: 'left' }}>
+                            {details.name}
+                        </h3>
+                    </Link>
+
                     <div
                         style={{
                             textAlign: 'left',

@@ -4,10 +4,10 @@ import ShoppingBasketIcon from '@material-ui/icons/ShoppingBasket';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
 import SearchIcon from '@material-ui/icons/Search';
 import { useSelector } from 'react-redux';
+import { Link } from "react-router-dom"
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import axios from 'axios';
-
 
 export default function Navbar(props) {
     const [options, setOptions] = useState([])
@@ -40,12 +40,16 @@ export default function Navbar(props) {
     return (
         <div>{props.match.url === "/login" || props.match.url === "/signup" || props.match.url === "/checkout" ?
             < div style={{ height: "60px", boxShadow: "0 0 0 1px rgba(67,41,163,.1),0 1px 8px 0 rgba(67,41,163,.1)", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-                <img style={{ height: "23px", marginLeft: "30px" }} src={crubhub} alt="logo"></img >
+                <Link to="/">
+                    <img style={{ height: "23px", marginLeft: "30px" }} src={crubhub} alt="logo"></img >
+                </Link>
                 <ShoppingBasketIcon style={{ color: "#2F4F4F", marginRight: "30px" }}></ShoppingBasketIcon>
             </ div> :
             <div style={{ height: "60px", boxShadow: "0 0 0 1px rgba(67,41,163,.1),0 1px 8px 0 rgba(67,41,163,.1)", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
                 <div style={{ display: "flex", alignItems: "center" }}>
-                    <img style={{ height: "23px", marginLeft: "30px" }} src={crubhub} alt="logo"></img >
+                    <Link to="/">
+                        <img style={{ height: "23px", marginLeft: "30px" }} src={crubhub} alt="logo"></img >
+                    </Link>
                     <div style={{ display: "flex", marginLeft: "30px" }}>
                         <LocationOnIcon style={{ height: "16px" }}></LocationOnIcon>
                         <div style={{ color: "#0070eb", marginLeft: "5px" }}><button onClick={openBox} style={{position:"relative", outline:"none", background:"Transparent", border:"none", cursor:"pointer"}} >San Francisco</button></div>
