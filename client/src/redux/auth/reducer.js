@@ -10,6 +10,7 @@ import {
     OAUTH_FAILURE,
     SET_ADDRESS,
     ADD_TO_CART,
+    CLEAR_CART,
     LOGOUT
 } from './actionTypes';
 
@@ -128,6 +129,19 @@ const reducer = (state = initialState, action) => {
                 localStorage.setItem('user', JSON.stringify(state));
                 return state;
             }
+        case CLEAR_CART:
+            localStorage.setItem(
+                'user',
+                JSON.stringify({
+                    ...state,
+                    cart: []
+                })
+            );
+            return {
+                ...state,
+                cart: []
+            };
+
         case LOGOUT: {
             //resets localStorage and state
             localStorage.clear();

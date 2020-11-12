@@ -9,4 +9,5 @@ export const OAUTH_SUCCESS = 'OAUTH_SUCCESS';
 export const OAUTH_FAILURE = 'OAUTH_FAILURE';
 export const SET_ADDRESS = 'SET_ADDRESS';
 export const ADD_TO_CART = 'ADD_TO_CART';
+export const CLEAR_CART = 'CLEAR_CART';
 export const LOGOUT = 'LOGOUT';

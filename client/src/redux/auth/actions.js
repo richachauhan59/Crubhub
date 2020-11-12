@@ -10,6 +10,7 @@ import {
     OAUTH_FAILURE,
     SET_ADDRESS,
     ADD_TO_CART,
+    CLEAR_CART,
     LOGOUT
 } from './actionTypes';
 
@@ -101,6 +102,10 @@ export const setAddress = (payload) => ({
 export const addToCart = (payload) => ({
     type: ADD_TO_CART,
     payload
+});
+
+export const clearCart = () => ({
+    type: CLEAR_CART
 });
 
 export const logout = () => ({

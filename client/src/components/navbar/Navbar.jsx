@@ -6,20 +6,24 @@ import SearchIcon from '@material-ui/icons/Search';
 import { Link } from 'react-router-dom';
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
+import IconButton from '@material-ui/core/IconButton';
+import DeleteIcon from '@material-ui/icons/Delete';
 import axios from 'axios';
 import { getSearchResults } from '../../redux/search/actions';
+import { clearCart } from '../../redux/auth/actions';
 import { useSelector, useDispatch } from 'react-redux';
 
 export default function Navbar(props) {
     const dispatch = useDispatch();
 
+    const { geometry } = useSelector((state) => state.auth.address);
+    const { firstName, authToken, cart } = useSelector((state) => state.auth);
+
     const [options, setOptions] = useState([]);
     const [searchInput, setSearchInput] = useState('');
     const [box, setbox] = useState(false);
     const [cuisine, setCuisine] = useState('');
-
-    const { geometry } = useSelector((state) => state.auth.address);
-    const { firstName, authToken } = useSelector((state) => state.auth);
+    const [openCart, setOpenCart] = useState(false);
 
     const openBox = () => {
         setbox(true);
@@ -76,9 +80,31 @@ export default function Navbar(props) {
                             alt="logo"
                         ></img>
                     </Link>
-                    <ShoppingBasketIcon
-                        style={{ color: '#2F4F4F', marginRight: '30px' }}
-                    ></ShoppingBasketIcon>
+                    <div
+                        style={{
+                            marginRight: '30px',
+                            display: 'flex',
+                            alignItems: 'center',
+                            color: cart.length > 0 ? '#13aa37' : '#2F4F4F',
+                            position: 'relative'
+                        }}
+                    >
+                        <ShoppingBasketIcon
+                            style={{
+                                marginRight: '5px',
+                                cursor: 'pointer'
+                            }}
+                        ></ShoppingBasketIcon>
+                        <span
+                            style={{
+                                fontSize: '16px',
+                                fontFamily: 'Raleway',
+                                display: cart.length > 0 ? 'block' : 'none'
+                            }}
+                        >
+                            {cart.length}
+                        </span>
+                    </div>
                 </div>
             ) : (
                 <div
@@ -182,14 +208,180 @@ export default function Navbar(props) {
                                 Sign in
                             </Link>
                         )}
-                        <ShoppingBasketIcon
+                        <div
                             style={{
-                                color: '#2F4F4F',
                                 marginRight: '30px',
-                                marginLeft: '20px',
-                                borderRadius: '5px'
+                                display: 'flex',
+                                alignItems: 'center',
+                                color: cart.length > 0 ? '#13aa37' : '#2F4F4F',
+                                position: 'relative'
                             }}
-                        ></ShoppingBasketIcon>
+                        >
+                            <ShoppingBasketIcon
+                                style={{
+                                    marginRight: '5px',
+                                    marginLeft: '20px',
+                                    borderRadius: '5px',
+                                    cursor: 'pointer'
+                                }}
+                                onClick={() =>
+                                    setOpenCart((prevState) => !prevState)
+                                }
+                            />
+                            <span
+                                style={{
+                                    fontSize: '16px',
+                                    fontFamily: 'Raleway',
+                                    display: cart.length > 0 ? 'block' : 'none'
+                                }}
+                                onClick={() =>
+                                    setOpenCart((prevState) => !prevState)
+                                }
+                            >
+                                {cart.length}
+                            </span>
+                            <div
+                                style={{
+                                    position: 'absolute',
+                                    visibility: openCart ? 'visible' : 'hidden',
+                                    opacity: openCart ? '1' : '0',
+                                    background: 'white',
+                                    height: '330px',
+                                    width: '300px',
+                                    borderRadius: '5px',
+                                    border: '1px solid #cbc4e6',
+                                    bottom: '-345px',
+                                    right: '-10px',
+                                    zIndex: '3',
+                                    transition:
+                                        'visibility 0.1s, opacity 0.1s linear'
+                                }}
+                            >
+                                <div
+                                    name="cart-arrow"
+                                    style={{
+                                        position: 'relative',
+                                        width: '100%'
+                                    }}
+                                >
+                                    <div
+                                        style={{
+                                            position: 'absolute',
+                                            height: '20px',
+                                            width: '20px',
+                                            top: '-10px',
+                                            right: '20px',
+                                            background: 'white',
+                                            borderTop: '1px solid #cbc4e6',
+                                            borderRight: '1px solid #cbc4e6',
+                                            transform: 'rotate(-45deg)'
+                                        }}
+                                    ></div>
+                                </div>
+                                <div
+                                    style={{
+                                        height: '100%',
+                                        width: '100%',
+                                        color: 'black'
+                                    }}
+                                >
+                                    <div
+                                        style={{
+                                            fontFamily: 'esti',
+                                            padding: '20px 15px 15px 15px',
+                                            justifyContent: 'space-between',
+                                            alignItems: 'center',
+                                            display:
+                                                cart.length > 0
+                                                    ? 'flex'
+                                                    : 'none'
+                                        }}
+                                    >
+                                        <h4>Your order</h4>
+                                        <button
+                                            style={{
+                                                border: 'none',
+                                                background: 'transparent',
+                                                textDecoration: 'underline',
+                                                cursor: 'pointer'
+                                            }}
+                                            onClick={() =>
+                                                dispatch(clearCart())
+                                            }
+                                        >
+                                            Clear all
+                                        </button>
+                                    </div>
+                                    <div
+                                        style={{
+                                            overflowY: 'auto',
+                                            height: '200px'
+                                        }}
+                                    >
+                                        {cart.length > 0 ? (
+                                            cart.map((item) => (
+                                                <div
+                                                    style={{
+                                                        padding: '00px 15px',
+                                                        borderBottom:
+                                                            '1px solid #cbc4e6',
+                                                        display: 'flex',
+                                                        alignItems: 'center',
+                                                        fontFamily:
+                                                            'sans-serif',
+                                                        fontSize: '15px'
+                                                    }}
+                                                >
+                                                    <div>{item.quantity}</div>
+                                                    <div
+                                                        style={{
+                                                            color: '#0070eb'
+                                                        }}
+                                                    >
+                                                        {item.name}
+                                                    </div>
+                                                    <div>
+                                                        <IconButton aria-label="delete">
+                                                            <DeleteIcon />
+                                                        </IconButton>
+                                                    </div>
+                                                    <div>${item.totalCost}</div>
+                                                </div>
+                                            ))
+                                        ) : (
+                                            <div
+                                                style={{
+                                                    backgroundImage:
+                                                        'url(https://assets.grubhub.com/assets/img/grubhub/empty-bag.svg)',
+                                                    width: '100%',
+                                                    height: '70%',
+                                                    marginTop: '30px',
+                                                    backgroundPosition:
+                                                        'center',
+                                                    backgroundSize: 'contain',
+                                                    backgroundRepeat:
+                                                        'no-repeat'
+                                                }}
+                                            ></div>
+                                        )}
+                                    </div>
+                                    <div
+                                        style={{
+                                            display:
+                                                cart.length > 0
+                                                    ? 'none'
+                                                    : 'block',
+                                            color: '#cacaca',
+                                            fontFamily: 'esti',
+                                            fontSize: '30px',
+                                            textAlign: 'center'
+                                        }}
+                                    >
+                                        Your bag is empty
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             )}
