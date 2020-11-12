@@ -9,6 +9,7 @@ import Grid from '@material-ui/core/Grid';
 import InfoIcon from '@material-ui/icons/Info';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
+import Navbar from "../navbar/Navbar"
 
 const useStyles = makeStyles((theme) => ({
     features: {
@@ -40,7 +41,7 @@ const marks = [
     }
 ];
 
-export default function SearchPage() {
+export default function SearchPage(props) {
     document.title = 'Search Results';
 
     const classes = useStyles();
@@ -72,6 +73,7 @@ export default function SearchPage() {
 
     return (
         <div>
+            <Navbar {...props}></Navbar>
             <div style={{ display: 'flex' }}>
                 <div
                     style={{
