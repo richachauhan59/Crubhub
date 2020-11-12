@@ -28,11 +28,11 @@ const useStyles = makeStyles((theme) => ({
         marginRight: drawerWidth
     },
     drawer: {
-        width: '450px'
+        width: '450px',
     },
     drawerPaper: {
         width: '450px',
-        postion: 'relative'
+        marginTop:"60px"
     },
     toolbar: theme.mixins.toolbar,
     content: {
@@ -238,16 +238,12 @@ export default function Payment(props) {
                     anchor="right"
                 >
                     <div className={classes.toolbar} />
-                    <Divider />
+                    <Divider  style={{marginTop:"-64px"}} />
                     <List>
-                        {['invite friends and order together'].map(
-                            (text, index) => (
-                                <ListItem button key={text}>
-                                    <PersonAddIcon />
-                                    <ListItemText primary={text} />
-                                </ListItem>
-                            )
-                        )}
+                        <ListItem>
+                            <PersonAddIcon />
+                            <ListItemText >invite friends and order together</ListItemText>
+                        </ListItem>
                     </List>
                     <hr />
                     <div style={{ margin: '20px' }}>
