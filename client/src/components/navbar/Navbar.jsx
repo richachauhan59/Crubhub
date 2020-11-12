@@ -9,7 +9,7 @@ export default function Navbar(props) {
     const [options, setoptions] = useState([])
 
     return (
-        <div>{props.match.url === "/login" || props.match.url === "/signup" ?
+        <div>{props.match.url === "/login" || props.match.url === "/signup" || props.match.url === "/checkout" ?
             < div style={{ height: "60px", boxShadow: "0 0 0 1px rgba(67,41,163,.1),0 1px 8px 0 rgba(67,41,163,.1)", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
                 <img style={{ height: "23px", marginLeft: "30px" }} src={crubhub} alt="logo"></img >
                 <ShoppingBasketIcon style={{ color: "#2F4F4F", marginRight: "30px" }}></ShoppingBasketIcon>
