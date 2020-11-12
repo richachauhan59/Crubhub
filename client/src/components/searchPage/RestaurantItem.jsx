@@ -25,10 +25,21 @@ export default function RestaurantItem({ details }) {
                         style={{
                             textAlign: 'left',
                             color: '#6f6f86',
-                            marginTop: '20px'
+                            marginTop: '20px',
+                            fontFamily: "raleway"
                         }}
                     >
                         {details.is_new ? 'New' : ''}
+                    </div>
+                    <div
+                        style={{
+                            textAlign: 'left',
+                            color: '#6f6f86',
+                            marginTop: '15px',
+                            fontFamily: "raleway"
+                        }}
+                    >
+                        {details.deliveryFee === 0 ? 'Free Delivery' : ''}
                     </div>
                 </div>
                 <div style={{ marginLeft: '20px', width: 'max-content' }}>

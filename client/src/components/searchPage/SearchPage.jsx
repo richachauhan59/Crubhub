@@ -49,9 +49,20 @@ export default function SearchPage(props) {
 
     const [delOrPick, setDelOrPick] = useState(true);
     const [sliderVal, setSliderVal] = useState(45);
-    const [ratingVal, setRatingVal] = useState(0);
+    const [ratingVal, setRatingVal] = useState(3);
+
+    // filters
+    const [crubhub, setcrubhub] = useState(false)
+    const [newest, setnewest] = useState(false)
+    const [free, setfree] = useState(false)
+
+    //sorting
+    const [select, setselect] = useState("rating")
 
     const searchState = useSelector((state) => state.search);
+
+    console.log(searchState)
+    console.log(ratingVal)
 
     // useEffect(() => {
     //     console.log(ratingVal);
@@ -77,10 +88,9 @@ export default function SearchPage(props) {
             <div style={{ display: 'flex' }}>
                 <div
                     style={{
-                        width: '25%',
+                        width: '30%',
                         padding: '20px',
-                        boxShadow:
-                            '0 0 0 1px rgba(67,41,163,.1),0 1px 8px 0 rgba(67,41,163,.1)'
+                        borderRight: "1px solid #e2dff1"
                     }}
                 >
                     <div style={{ display: 'flex', alignItems: 'center' }}>
@@ -170,7 +180,7 @@ export default function SearchPage(props) {
                         <h3 style={{ fontFamily: 'esti' }}>Feature</h3>
                     </div>
 
-                    <div
+                    {/* <div
                         style={{
                             display: 'flex',
                             justifyContent: 'flex-start',
@@ -196,7 +206,7 @@ export default function SearchPage(props) {
                             Crubhub+
                         </div>
                     </div>
-
+ */}
                     <div
                         style={{
                             display: 'flex',
@@ -206,9 +216,14 @@ export default function SearchPage(props) {
                         className={classes.features}
                     >
                         <Checkbox
+                            checked={newest}
+                            color="primary"
+                            onChange={(e) => setnewest(e.target.checked)}
                             inputProps={{ 'aria-label': 'primary checkbox' }}
                         />
-                        <div style={{ fontFamily: 'raleway' }}>New</div>
+                        <div style={{ fontFamily: 'raleway' }}>
+                            New
+                        </div>
                     </div>
 
                     <div
@@ -220,6 +235,9 @@ export default function SearchPage(props) {
                         className={classes.features}
                     >
                         <Checkbox
+                            checked={free}
+                            color="primary"
+                            onChange={(e) => setfree(e.target.checked)}
                             inputProps={{ 'aria-label': 'primary checkbox' }}
                         />
                         <div style={{ fontFamily: 'raleway' }}>
@@ -631,17 +649,28 @@ export default function SearchPage(props) {
                         <select
                             placeholder="default"
                             style={{ marginRight: '35px' }}
+                            onChange={(e) => setselect(e.target.value)}
                         >
-                            <option>Rating</option>
-                            <option>Distance</option>
-                            <option>Delivery Fee</option>
+                            <option value="rating">Rating</option>
+                            <option value="deliveryFee">Delivery Fee</option>
+                            <option value="delivery">Delivery Time</option>
                         </select>
                     </div>
-                    {searchState.searchResults.map((restaurant) => (
+                    {searchState.searchResults.filter((item) => newest ? item.is_new === newest : item).filter((item) => free ? item.deliveryFee === 0 : item).filter((item) => item.rating.value >= ratingVal).sort((a, b) => {
+                        if (select === "rating") {
+                            return b.rating.value - a.rating.value
+                        }
+                        else if (select === "deliveryFee") {
+                            return a.deliveryFee - b.deliveryFee
+                        }
+                        else {
+                            return a.avgDeliveryTime - b.avgDeliveryTime
+                        }
+                    }).map((restaurant) => (
                         <RestaurantItem details={restaurant} />
                     ))}
                 </div>
             </div>
-        </div>
+        </div >
     );
 }
