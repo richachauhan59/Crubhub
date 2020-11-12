@@ -55,10 +55,19 @@ export default function Routes(props) {
                         )
                     }
                 ></Route>
-                <Route path="/restaurant" render={(props) => <Restaurant {...props}></Restaurant>} ></Route>
-                <Route path="/search" render={(props) => <SearchPage {...props}></SearchPage>}></Route>
-                <Route path="*" render={() => <h1>404 Page Not Found</h1>}></Route>
+                <Route
+                    path="/restaurant"
+                    render={(props) => <Restaurant {...props}></Restaurant>}
+                ></Route>
+                <Route
+                    path="/search"
+                    render={(props) => <SearchPage {...props}></SearchPage>}
+                ></Route>
                 <Route exact path="/checkout" render={() => <PaymentPage />} />
+                <Route
+                    path="*"
+                    render={() => <h1>404 Page Not Found</h1>}
+                ></Route>
             </Switch>
         </div>
     );

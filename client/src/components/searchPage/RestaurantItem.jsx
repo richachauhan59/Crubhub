@@ -1,27 +1,73 @@
-import React from 'react'
+import React from 'react';
 import Rating from '@material-ui/lab/Rating';
 
-export default function RestaurantItem(props) {
+export default function RestaurantItem({ details }) {
     return (
         <div>
-            <div style={{ margin: '10px 20px', display: "flex", justifyContent: "flex-start", alignItems: "center" }}>
-                <img style={{ height: "100px" }} src="https://res.cloudinary.com/grubhub/image/upload/d_search:browse-images:default.jpg/w_205,h_205,f_auto,fl_lossy,q_80,c_fill/q3fdlj8kesfztmfiig9m" alt="resitem"></img>
-                <div style={{ marginLeft: "20px", width: "45%" }}>
-                    <h3 style={{ fontFamily: "esti", textAlign: "left" }}>Häagen-Dazs Direct - SoMa - 475 6th St</h3>
-                    <div style={{ textAlign: "left", color: "#6f6f86", marginTop: '20px' }}>New</div>
+            <div
+                style={{
+                    margin: '10px 20px',
+                    display: 'flex',
+                    justifyContent: 'flex-start',
+                    alignItems: 'center'
+                }}
+            >
+                <img
+                    style={{ height: '100px', width: '120px' }}
+                    src={details.searchImage}
+                    alt="resitem"
+                ></img>
+                <div style={{ marginLeft: '20px', width: '45%' }}>
+                    <h3 style={{ fontFamily: 'esti', textAlign: 'left' }}>
+                        {details.name}
+                    </h3>
+                    <div
+                        style={{
+                            textAlign: 'left',
+                            color: '#6f6f86',
+                            marginTop: '20px'
+                        }}
+                    >
+                        {details.is_new ? 'New' : ''}
+                    </div>
                 </div>
-                <div style={{ marginLeft: "20px", width: "20%" }}>
-                    <Rating name="simple-controlled" />
-                    <div style={{ color: "#6b6b83" }}>12 ratings</div>
+                <div style={{ marginLeft: '20px', width: 'max-content' }}>
+                    <Rating
+                        name="read-only"
+                        readOnly
+                        value={details.rating.value}
+                        precision={0.1}
+                    />
+                    <div
+                        style={{
+                            color: '#6b6b83',
+                            fontFamily: 'sans serif',
+                            fontSize: '14px',
+                            textAlign: 'center'
+                        }}
+                    >
+                        {details.rating.count} ratings
+                    </div>
                 </div>
-                <div style={{ marginLeft: "40px" }}>
-                    <h3 style={{ fontFamily: "esti" }}>30-40</h3>
-                    <div style={{ color: "#6b6b83", marginTop: "10px" }}>mins</div>
+                <div style={{ marginLeft: '200px' }}>
+                    <h3 style={{ fontFamily: 'esti' }}>
+                        {details.avgDeliveryTime} -{' '}
+                        {details.avgDeliveryTime + 10}
+                    </h3>
+                    <div
+                        style={{
+                            color: '#6b6b83',
+                            marginTop: '10px',
+                            fontFamily: 'Raleway',
+                            fontSize: '14px',
+                            textAlign: 'center'
+                        }}
+                    >
+                        mins
+                    </div>
                 </div>
-
             </div>
-            <div style={{ border: "0.5px solid #d9d4ed", height: "1px" }}></div>
+            <div style={{ border: '0.5px solid #d9d4ed', height: '1px' }}></div>
         </div>
-
-    )
+    );
 }
