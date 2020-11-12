@@ -7,7 +7,10 @@ export default function RestaurantItem({ details }) {
         <div>
             <Link
                 style={{ textDecoration: 'none', color: 'black' }}
-                to="/restaurant"
+                to={{
+                    pathname: `/restaurant/${details._id}`,
+                    state: { id: details._id, distance: details.distance }
+                }}
             >
                 <div
                     style={{

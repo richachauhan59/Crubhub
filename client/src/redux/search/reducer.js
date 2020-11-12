@@ -11,7 +11,7 @@ const initialState = {
     searchResultsLoading: false,
     searchResultsError: '',
     searchResults: JSON.parse(localStorage.getItem('searchResults')) || [],
-    restaurantDetailsLoading: false,
+    restaurantDetailsLoading: true,
     restaurantDetailsError: '',
     restaurantDetails: {}
 };

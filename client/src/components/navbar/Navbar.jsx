@@ -54,7 +54,7 @@ export default function Navbar(props) {
     };
 
     return (
-        <div>
+        <div style={{ background: 'white' }}>
             {props.match.url === '/login' ||
             props.match.url === '/signup' ||
             props.match.url === '/checkout' ? (
