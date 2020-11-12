@@ -21,8 +21,8 @@ export default function Routes(props) {
                         authToken === '' ? (
                             <Home {...props}></Home>
                         ) : (
-                                <Redirect to="/lets-eat" />
-                            )
+                            <Redirect to="/lets-eat" />
+                        )
                     }
                 ></Route>
                 <Route
@@ -31,8 +31,8 @@ export default function Routes(props) {
                         authToken === '' ? (
                             <Signup {...props} />
                         ) : (
-                                <Redirect to="/lets-eat" />
-                            )
+                            <Redirect to="/lets-eat" />
+                        )
                     }
                 ></Route>
                 <Route
@@ -41,8 +41,8 @@ export default function Routes(props) {
                         authToken === '' ? (
                             <Login {...props} />
                         ) : (
-                                <Redirect to="/lets-eat" />
-                            )
+                            <Redirect to="/lets-eat" />
+                        )
                     }
                 ></Route>
                 <Route
@@ -51,19 +51,23 @@ export default function Routes(props) {
                         authToken !== '' ? (
                             <Dashboard {...props} />
                         ) : (
-                                <Redirect to="/login" />
-                            )
+                            <Redirect to="/login" />
+                        )
                     }
                 ></Route>
                 <Route
-                    path="/restaurant"
+                    path="/restaurant/:id"
                     render={(props) => <Restaurant {...props}></Restaurant>}
                 ></Route>
                 <Route
                     path="/search"
                     render={(props) => <SearchPage {...props}></SearchPage>}
                 ></Route>
-                <Route exact path="/checkout" render={(props) => <PaymentPage {...props} />} />
+                <Route
+                    exact
+                    path="/checkout"
+                    render={(props) => <PaymentPage {...props} />}
+                />
                 <Route
                     path="*"
                     render={() => <h1>404 Page Not Found</h1>}

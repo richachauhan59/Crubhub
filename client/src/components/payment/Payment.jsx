@@ -14,7 +14,7 @@ import { TextField } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import axios from 'axios';
-import Navbar from "../navbar/Navbar"
+import Navbar from '../navbar/Navbar';
 
 const drawerWidth = 240;
 
@@ -28,11 +28,12 @@ const useStyles = makeStyles((theme) => ({
         marginRight: drawerWidth
     },
     drawer: {
-        width: '450px',
+        width: '450px'
     },
     drawerPaper: {
         width: '450px',
-        marginTop:"60px"
+        zIndex: '-1'
+        // marginTop: '60px'
     },
     toolbar: theme.mixins.toolbar,
     content: {
@@ -60,6 +61,8 @@ const useStyles = makeStyles((theme) => ({
     forBtn: {
         width: '30%',
         height: '55px',
+        border: '1px solid gray',
+        borderRadius: '0px',
         background: 'transparent',
         color: '#0271EB',
         fontWeight: 'bolder',
@@ -137,15 +140,15 @@ export default function Payment(props) {
                     <div className={classes.toolbar} />
                     <Typography className={classes.inputBox} variant="h4">
                         You've entered a new address
-                    <br />
-                    Does everything below look correct?
-                </Typography>
+                        <br />
+                        Does everything below look correct?
+                    </Typography>
 
                     <form noValidate onSubmit={handlePayment}>
                         <Grid item xs={12}>
                             <Typography className={classes.forBold}>
                                 Contact
-                        </Typography>
+                            </Typography>
                             <TextField
                                 className={classes.inputBox}
                                 variant="outlined"
@@ -164,12 +167,15 @@ export default function Payment(props) {
                             />
                         </Grid>
                         <p>
-                            By providing your phone number, you consent to receive
-                            text messages from Grubhub related to your order.
-                        <br /> Standard message rates may apply. See our Terms
-                        of Use for more information.
-                    </p>
-                        <Typography className={classes.forBold}>Address</Typography>
+                            By providing your phone number, you consent to
+                            receive text messages from Grubhub related to your
+                            order.
+                            <br /> Standard message rates may apply. See our
+                            Terms of Use for more information.
+                        </p>
+                        <Typography className={classes.forBold}>
+                            Address
+                        </Typography>
                         <TextField
                             className={classes.inputBoxAdd}
                             label="Address(Required)"
@@ -202,14 +208,22 @@ export default function Payment(props) {
                         />
                         <Typography className={classes.forBold}>
                             Delivery instructions
-                    </Typography>
+                        </Typography>
                         <TextField
                             style={{ width: '98%' }}
                             variant="outlined"
                             label="Leave info for your driver here (e.g. Ring bell and leave bag on doorstep). For food instructions (e.g. more ketchup!), make a note in the related menu item."
                         />
                         <div className={`${classes.root} ${classes.forBtnDiv}`}>
-                            <button className={classes.forBtn}>Home</button>
+                            <button
+                                className={classes.forBtn}
+                                style={{
+                                    backgroundColor: '#0271eb',
+                                    color: 'white'
+                                }}
+                            >
+                                Home
+                            </button>
                             <button className={classes.forBtn}>Work</button>
                             <button className={classes.forBtn}>Other</button>
                         </div>
@@ -226,7 +240,7 @@ export default function Payment(props) {
                             }}
                         >
                             Continue to Payment method
-                    </button>
+                        </button>
                     </form>
                 </main>
                 <Drawer
@@ -238,35 +252,40 @@ export default function Payment(props) {
                     anchor="right"
                 >
                     <div className={classes.toolbar} />
-                    <Divider  style={{marginTop:"-64px"}} />
+                    {/* style={{ marginTop: '-64px' }} */}
+                    <Divider />
                     <List>
                         <ListItem>
-                            <PersonAddIcon />
-                            <ListItemText >invite friends and order together</ListItemText>
+                            <PersonAddIcon style={{ marginRight: '10px' }} />
+                            <ListItemText>
+                                Invite friends and order together
+                            </ListItemText>
                         </ListItem>
                     </List>
                     <hr />
                     <div style={{ margin: '20px' }}>
                         <Typography style={{ fontFamily: 'esti' }}>
                             Your Order from
-                    </Typography>
+                        </Typography>
                         <Typography
                             style={{ fontFamily: 'Raleway', color: 'blue' }}
                         >
                             Ritz Dinner
-                    </Typography>
+                        </Typography>
                     </div>
                     <div style={{ margin: '20px' }}>
                         <div style={{ lineHeight: '50px' }}>
                             <span>1 Waffel fries</span>
                             <span style={{ float: 'right' }}>
                                 {Mozzarella_Sticks}$
-                        </span>
+                            </span>
                         </div>
                         <hr />
                         <div style={{ lineHeight: '50px' }}>
                             <span>1 Mozzarella Sticks</span>
-                            <span style={{ float: 'right' }}>{Waffel_fries}$</span>
+                            <span style={{ float: 'right' }}>
+                                {Waffel_fries}$
+                            </span>
                         </div>
                         <hr />
                     </div>
@@ -275,7 +294,7 @@ export default function Payment(props) {
                             <span>item subtotal</span>
                             <span style={{ float: 'right' }}>
                                 {Mozzarella_Sticks + Waffel_fries}$
-                        </span>
+                            </span>
                         </div>
                         <div>
                             <span>Delivery fee</span>

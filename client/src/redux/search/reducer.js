@@ -10,7 +10,7 @@ import {
 const initialState = {
     searchResultsLoading: false,
     searchResultsError: '',
-    searchResults: [],
+    searchResults: JSON.parse(localStorage.getItem('searchResults')) || [],
     restaurantDetailsLoading: false,
     restaurantDetailsError: '',
     restaurantDetails: {}
@@ -27,6 +27,10 @@ export default function reducer(state = initialState, action) {
                 searchResultsError: action.payload
             };
         case SEARCH_RESULTS_SUCCESS:
+            console.log(action.payload);
+            // JSON.stringify(
+            //     localStorage.setItem('searchResults', action.payload)
+            // );
             return {
                 ...state,
                 searchResultsLoading: false,

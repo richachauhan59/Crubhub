@@ -94,6 +94,13 @@ const reducer = (state = initialState, action) => {
             };
         case SET_ADDRESS:
             const place = action.payload.place_name.split(', ');
+            localStorage.setItem(
+                'user',
+                JSON.stringify({
+                    ...state,
+                    address: { place, geometry: action.payload.geometry }
+                })
+            );
             return {
                 ...state,
                 address: { place, geometry: action.payload.geometry }
