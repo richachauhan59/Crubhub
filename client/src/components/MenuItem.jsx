@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
@@ -25,9 +25,14 @@ const useStyles = makeStyles((theme) => ({
     },
     input: {
         border:"none",
-        width:"65%",
-        margin:"3%",
+        width:"34%",
         textAlign:"center"
+    },
+    qtnBtn: {
+        border: '0',
+        width:"30%",
+        background: "transparent",
+        cursor: 'pointer',
     }
    
   }));
@@ -36,7 +41,11 @@ const useStyles = makeStyles((theme) => ({
 
 export default function MenuItem(props) {
     const classes = useStyles();
-    const [open, setOpen] = React.useState(false);
+    const [open, setOpen] = useState(false);
+    const [quantity, setQuantity] = useState(1);
+    const [cost, setCost] = useState(5)
+    const [totalCost, setTotalCost] = useState(cost)
+    
   
     const handleOpen = () => {
       setOpen(true);
@@ -49,17 +58,16 @@ export default function MenuItem(props) {
     const name = 'Mint Chip Ice Cream';
     const description =
         'We infuse mint essence into a smooth, creamy base and add rich chocolaty chips for the perfect finish to this refreshingly cool treat. 14 oz.';
-    let cost = 7.99
-    let quantity = 1
     
-    const changeQuantity = () =>{
-        quantity += 1
-        cost = cost * quantity
+    
+    const increaseQuantity = () =>{
+        setQuantity(quantity+1)
+        setTotalCost(totalCost + cost)
     }
-
-    // const modalOpen = () => {
-    //     console.log("madal opend")
-    // }
+    const decreaseQuantity = () =>{
+        setQuantity(quantity-1)
+        setTotalCost(totalCost - cost)
+    }
 
     return (
         <React.Fragment>
@@ -131,12 +139,12 @@ export default function MenuItem(props) {
             <p>Cost: {cost}</p>
             <hr/>
             <div className={classes.addItemDiv} >
-                <span>-</span>
-                <  input className={classes.input} onChange={changeQuantity} value={quantity} ></input>
-                <span onClick={changeQuantity} >+</span>
+                <span><button className={classes.qtnBtn} onClick={decreaseQuantity} >-</button></span>
+                <input className={classes.input} value={quantity}></input>
+                <span><button className={classes.qtnBtn} onClick={increaseQuantity} >+</button></span>
             </div>
             <div style={{float:"right", background:"#D4D4DB",padding:"20px", borderRadius:"5px", fontFamily:"esti"}}>
-                add to bag <span>cost: ${cost}</span>
+                add to bag <span>cost: ${totalCost}</span>
             </div>
         </div>
         </Fade>
