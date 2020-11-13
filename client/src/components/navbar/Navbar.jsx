@@ -9,10 +9,12 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
 import axios from 'axios';
-import { getSearchResults } from '../../redux/search/actions';
 import { clearCart } from '../../redux/auth/actions';
 import { useSelector, useDispatch } from 'react-redux';
 import { makeStyles } from '@material-ui/styles';
+import { getSearchResults } from '../../redux/search/actions';
+import { setAddress } from '../../redux/auth/actions';
+import { useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
     cart: {
@@ -36,9 +38,12 @@ const useStyles = makeStyles((theme) => ({
 export default function Navbar(props) {
     const classes = useStyles();
     const dispatch = useDispatch();
+    const history = useHistory();
 
     const { geometry } = useSelector((state) => state.auth.address);
-    const { firstName, authToken, cart } = useSelector((state) => state.auth);
+    const { firstName, authToken, cart, address } = useSelector(
+        (state) => state.auth
+    );
 
     const [options, setOptions] = useState([]);
     const [searchInput, setSearchInput] = useState('');
@@ -46,12 +51,23 @@ export default function Navbar(props) {
     const [cuisine, setCuisine] = useState('');
     const [openCart, setOpenCart] = useState(false);
 
+    const findFood = (e) => {
+        setbox(!box);
+        e.preventDefault();
+        dispatch(setAddress(searchInput));
+        dispatch(getSearchResults({ geometry: searchInput.geometry }));
+        setTimeout(() => {
+            history.push('/search');
+        }, 600);
+    };
+
     const openBox = () => {
-        setbox(true);
+        setbox(!box);
     };
 
     const handleInputChange = (value) => {
         setSearchInput(value);
+        console.log(searchInput);
         axios({
             method: 'get',
             url: `https://api.mapbox.com/geocoding/v5/mapbox.places/${value}.json`,
@@ -170,7 +186,7 @@ export default function Navbar(props) {
                                         cursor: 'pointer'
                                     }}
                                 >
-                                    San Francisco
+                                    {address.place[0]}
                                 </button>
                             </div>
                         </div>
@@ -482,32 +498,35 @@ export default function Navbar(props) {
                 }}
             >
                 {box ? (
-                    <Autocomplete
-                        freeSolo
-                        options={options.map((place) => place.place_name)}
-                        onChange={(event, value) =>
-                            setSearchInput(() =>
-                                options.find(
-                                    (place) => place.place_name === value
+                    <form onSubmit={findFood}>
+                        <Autocomplete
+                            disableClearable
+                            freeSolo
+                            options={options.map((place) => place.place_name)}
+                            onChange={(event, value) =>
+                                setSearchInput(() =>
+                                    options.find(
+                                        (place) => place.place_name === value
+                                    )
                                 )
-                            )
-                        }
-                        renderInput={(params) => (
-                            <TextField
-                                style={{ outline: 'none' }}
-                                {...params}
-                                placeholder="Enter street address or zip code"
-                                variant="outlined"
-                                InputProps={{
-                                    ...params.InputProps,
-                                    type: 'search'
-                                }}
-                                onChange={(e) =>
-                                    handleInputChange(e.target.value)
-                                }
-                            />
-                        )}
-                    />
+                            }
+                            renderInput={(params) => (
+                                <TextField
+                                    style={{ outline: 'none' }}
+                                    {...params}
+                                    placeholder="Enter street address or zip code"
+                                    variant="outlined"
+                                    InputProps={{
+                                        ...params.InputProps,
+                                        type: 'search'
+                                    }}
+                                    onChange={(e) =>
+                                        handleInputChange(e.target.value)
+                                    }
+                                />
+                            )}
+                        />
+                    </form>
                 ) : (
                     <div></div>
                 )}
