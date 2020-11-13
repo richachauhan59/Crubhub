@@ -78,6 +78,7 @@ export default function MenuItem({ item }) {
     };
 
     const addItem = () => {
+        setOpen(false);
         dispatch(addToCart({ name: item.name, quantity, totalCost }));
     };
 

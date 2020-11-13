@@ -329,7 +329,7 @@ export default function SearchPage(props) {
                                 fontSize: '15px',
                                 borderRadius: '4px',
                                 marginBottom: '25px',
-                                marginTop: '15px'
+                                marginTop: '80px'
                             }}
                         >
                             <div

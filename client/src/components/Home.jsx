@@ -342,7 +342,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function Home(props) {
-
     const classes = useStyles();
     const dispatch = useDispatch();
     const history = useHistory();
@@ -432,7 +431,7 @@ function Home(props) {
                         <div className={classes.autoComplete}>
                             <div className={classes.searchBox}>
                                 <Autocomplete
-                                disableClearable
+                                    disableClearable
                                     freeSolo
                                     options={options.map(
                                         (place) => place.place_name
