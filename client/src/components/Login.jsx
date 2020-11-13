@@ -53,8 +53,8 @@ export default function Login(props) {
     };
 
     return (
-        <div>
-            <Navbar {...props} ></Navbar>
+        <React.Fragment>
+            <Navbar {...props}></Navbar>
             <div className={styles.mainCard}>
                 <div style={{ padding: '10px 30px' }}>
                     <h2 className={styles.signInText}>
@@ -201,6 +201,6 @@ export default function Login(props) {
                     </div>
                 </div>
             </div>
-        </div>
+        </React.Fragment>
     );
 }
