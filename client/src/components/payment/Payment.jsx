@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -12,9 +12,11 @@ import ListItemText from '@material-ui/core/ListItemText';
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
 import { TextField } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
-import Box from '@material-ui/core/Box';
-import axios from 'axios';
 import Navbar from '../navbar/Navbar';
+import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
+import axios from 'axios';
+import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 const drawerWidth = 240;
 
@@ -82,9 +84,13 @@ export default function Payment(props) {
 
     const classes = useStyles();
 
-    let Mozzarella_Sticks = 8;
-    let Waffel_fries = 10;
-    let total = Mozzarella_Sticks + Waffel_fries + 5 + 5;
+    let total = 0;
+
+    const cart = useSelector((state) => state.auth.cart);
+
+    const restaurant_id =
+        JSON.parse(localStorage.getItem('restaurant_id')) ||
+        '5fab9241b9d43a2c3471da76';
 
     const handlePayment = async (e) => {
         e.preventDefault();
@@ -93,7 +99,9 @@ export default function Payment(props) {
                 method: 'POST',
                 url: 'http://localhost:5000/api/order',
                 headers: { 'Content-Type': 'application/json' },
-                data: { amount: Number(total) }
+                data: {
+                    amount: Number((total + 4.99 + 0.1 * total).toFixed(2))
+                }
             });
 
             const options = {
@@ -106,7 +114,11 @@ export default function Payment(props) {
                         const captureResponse = await axios({
                             method: 'POST',
                             url: `http://localhost:5000/api/capture/${paymentId}`,
-                            data: { amount: Number(total) }
+                            data: {
+                                amount: Number(
+                                    (total + 4.99 + 0.1 * total).toFixed(2)
+                                )
+                            }
                         });
                         const successObj = JSON.parse(
                             captureResponse.data.body
@@ -267,48 +279,62 @@ export default function Payment(props) {
                     <hr />
                     <div style={{ margin: '20px' }}>
                         <Typography style={{ fontFamily: 'esti' }}>
-                            Your Order from
-                        </Typography>
-                        <Typography
-                            style={{ fontFamily: 'Raleway', color: 'blue' }}
-                        >
-                            Ritz Dinner
+                            Your Order details
                         </Typography>
                     </div>
-                    <div style={{ margin: '20px' }}>
-                        <div style={{ lineHeight: '50px' }}>
-                            <span>1 Waffel fries</span>
-                            <span style={{ float: 'right' }}>
-                                {Mozzarella_Sticks}$
-                            </span>
-                        </div>
-                        <hr />
-                        <div style={{ lineHeight: '50px' }}>
-                            <span>1 Mozzarella Sticks</span>
-                            <span style={{ float: 'right' }}>
-                                {Waffel_fries}$
-                            </span>
-                        </div>
-                        <hr />
+                    <div
+                        style={{
+                            margin: '20px',
+                            overflowY: 'auto',
+                            height: '210px'
+                        }}
+                    >
+                        {cart.map((item, index) => {
+                            total += item.totalCost;
+                            return (
+                                <div key={item.name + index}>
+                                    <div style={{ lineHeight: '50px' }}>
+                                        <span style={{ marginRight: '20px' }}>
+                                            {item.quantity}
+                                        </span>
+                                        <span>{item.name}</span>
+                                        <span style={{ float: 'right' }}>
+                                            {item.totalCost.toFixed(2)}$
+                                        </span>
+                                    </div>
+                                    <hr />
+                                </div>
+                            );
+                        })}
                     </div>
                     <div style={{ margin: '20px' }}>
                         <div>
-                            <span>item subtotal</span>
+                            <span>Item subtotal</span>
                             <span style={{ float: 'right' }}>
-                                {Mozzarella_Sticks + Waffel_fries}$
+                                {total.toFixed(2)}$
                             </span>
                         </div>
                         <div>
                             <span>Delivery fee</span>
-                            <span style={{ float: 'right' }}>5$</span>
+                            <span style={{ float: 'right' }}>4.99$</span>
                         </div>
                         <div>
-                            <span>tax and fee</span>
-                            <span style={{ float: 'right' }}>5$</span>
+                            <span>Tax and fees</span>
+                            <span style={{ float: 'right' }}>
+                                {(0.1 * total).toFixed(2)}$
+                            </span>
                         </div>
-                        <div style={{ fontFamily: 'esti', lineHeight: '50px' }}>
-                            <span>total</span>
-                            <span style={{ float: 'right' }}>{total}$</span>
+                        <div
+                            style={{
+                                fontFamily: 'esti',
+                                lineHeight: '50px',
+                                fontSize: '18px'
+                            }}
+                        >
+                            <span>Total</span>
+                            <span style={{ float: 'right' }}>
+                                {(total + 4.99 + 0.1 * total).toFixed(2)}$
+                            </span>
                         </div>
                     </div>
                     <div
@@ -317,19 +343,44 @@ export default function Payment(props) {
                             position: 'absolute',
                             bottom: '0',
                             left: '0',
-                            background: '#545470',
-                            height: '60px',
-                            display: 'flex',
-                            padding: '10px',
-                            justifyContent: 'space-between',
-                            alignItems: 'center',
-                            color: 'white',
-                            fontFamily: 'esti',
-                            fontSize: '20px'
+                            color: 'white'
                         }}
                     >
-                        <span>Total</span>{' '}
-                        <span style={{ float: 'right' }}>{total}$</span>
+                        <div
+                            style={{
+                                background: '#0070eb',
+                                padding: '3px',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'left',
+                                fontFamily: 'Raleway',
+                                color: 'white',
+                                textDecoration: 'none',
+                                cursor: 'pointer'
+                            }}
+                        >
+                            <ChevronLeftIcon />
+                            <div style={{ fontSize: '18px' }}>
+                                Modify your order
+                            </div>
+                        </div>
+                        <div
+                            style={{
+                                background: '#545470',
+                                height: '60px',
+                                display: 'flex',
+                                padding: '10px',
+                                justifyContent: 'space-between',
+                                alignItems: 'center',
+                                fontFamily: 'esti',
+                                fontSize: '30px'
+                            }}
+                        >
+                            <span>TOTAL</span>{' '}
+                            <span style={{ float: 'right' }}>
+                                {(total + 4.99 + 0.1 * total).toFixed(2)}$
+                            </span>
+                        </div>
                     </div>
                 </Drawer>
             </div>

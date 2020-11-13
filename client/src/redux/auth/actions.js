@@ -99,10 +99,10 @@ export const setAddress = (payload) => ({
     payload
 });
 
-export const addToCart = (payload) => ({
-    type: ADD_TO_CART,
-    payload
-});
+export const addToCart = (payload) => {
+    localStorage.setItem('restaurant_id', JSON.stringify(payload[0]));
+    return { type: ADD_TO_CART, payload: payload[1] };
+};
 
 export const clearCart = () => ({
     type: CLEAR_CART

@@ -5,7 +5,7 @@ import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
 import CloseIcon from '@material-ui/icons/Close';
 import IconButton from '@material-ui/core/IconButton';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { addToCart } from '../redux/auth/actions';
 
 const useStyles = makeStyles((theme) => ({
@@ -57,6 +57,9 @@ export default function MenuItem({ item }) {
     const [quantity, setQuantity] = useState(1);
     const [cost, setCost] = useState(item.price.amount / 100);
     const [totalCost, setTotalCost] = useState(cost);
+    const restaurant_id = useSelector(
+        (state) => state.search.restaurantDetails._id
+    );
 
     const handleOpen = () => {
         setOpen(true);
@@ -79,7 +82,9 @@ export default function MenuItem({ item }) {
 
     const addItem = () => {
         setOpen(false);
-        dispatch(addToCart({ name: item.name, quantity, totalCost }));
+        dispatch(
+            addToCart([restaurant_id, { name: item.name, quantity, totalCost }])
+        );
     };
 
     return (

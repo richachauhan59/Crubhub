@@ -103,6 +103,8 @@ export default function Navbar(props) {
                     style={{
                         height: '60px',
                         position: 'fixed',
+                        top: 0,
+                        left: 0,
                         width: '100%',
                         background: '#ffffff',
                         zIndex: '2',
@@ -151,6 +153,8 @@ export default function Navbar(props) {
                     style={{
                         height: '60px',
                         position: 'fixed',
+                        top: '0',
+                        left: '0',
                         background: 'white',
                         zIndex: '2',
                         width: '100%',
@@ -453,7 +457,11 @@ export default function Navbar(props) {
                                             fontSize: '15px',
                                             color: '#222',
                                             fontFamily: 'sans-serif',
-                                            borderBottom: '1px solid #cbc4e6'
+                                            borderBottom: '1px solid #cbc4e6',
+                                            visibility:
+                                                cart.length > 0
+                                                    ? 'visible'
+                                                    : 'hidden'
                                         }}
                                     >
                                         <div>Items subtotal:</div>
@@ -467,7 +475,15 @@ export default function Navbar(props) {
                                                 .toFixed(2)}
                                         </div>
                                     </div>
-                                    <div style={{ padding: '15px' }}>
+                                    <div
+                                        style={{
+                                            padding: '15px',
+                                            visibility:
+                                                cart.length > 0
+                                                    ? 'visible'
+                                                    : 'hidden'
+                                        }}
+                                    >
                                         <div className={classes.cart}>
                                             <Link
                                                 to="/checkout"
