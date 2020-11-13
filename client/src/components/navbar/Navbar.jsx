@@ -29,6 +29,7 @@ export default function Navbar(props) {
     const [openCart, setOpenCart] = useState(false);
 
     const findFood = (e) => {
+        setbox(!box);
         e.preventDefault()
         dispatch(setAddress(searchInput));
         dispatch(getSearchResults({ geometry: searchInput.geometry }));
