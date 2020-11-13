@@ -9,6 +9,8 @@ import {
     OAUTH_SUCCESS,
     OAUTH_FAILURE,
     SET_ADDRESS,
+    ADD_TO_CART,
+    CLEAR_CART,
     LOGOUT
 } from './actionTypes';
 
@@ -21,7 +23,7 @@ const initialState = {
     address: user.address || {},
     orders: user.orders || [],
     payments: user.payments || {},
-    cart: user.cart || {},
+    cart: user.cart || [],
     authToken: user.authToken || '',
     loginloading: false,
     loginError: '',
@@ -94,10 +96,52 @@ const reducer = (state = initialState, action) => {
             };
         case SET_ADDRESS:
             const place = action.payload.place_name.split(', ');
+            localStorage.setItem(
+                'user',
+                JSON.stringify({
+                    ...state,
+                    address: { place, geometry: action.payload.geometry }
+                })
+            );
             return {
                 ...state,
                 address: { place, geometry: action.payload.geometry }
             };
+        case ADD_TO_CART:
+            let dupe_item = state.cart.findIndex(
+                (item) => item.name === action.payload.name
+            );
+            if (dupe_item === -1) {
+                localStorage.setItem(
+                    'user',
+                    JSON.stringify({
+                        ...state,
+                        cart: [...state.cart, action.payload]
+                    })
+                );
+                return {
+                    ...state,
+                    cart: [...state.cart, action.payload]
+                };
+            } else {
+                state.cart[dupe_item].quantity += action.payload.quantity;
+                state.cart[dupe_item].totalCost += action.payload.totalCost;
+                localStorage.setItem('user', JSON.stringify(state));
+                return state;
+            }
+        case CLEAR_CART:
+            localStorage.setItem(
+                'user',
+                JSON.stringify({
+                    ...state,
+                    cart: []
+                })
+            );
+            return {
+                ...state,
+                cart: []
+            };
+
         case LOGOUT: {
             //resets localStorage and state
             localStorage.clear();

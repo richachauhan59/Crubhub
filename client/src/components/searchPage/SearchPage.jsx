@@ -9,7 +9,8 @@ import Grid from '@material-ui/core/Grid';
 import InfoIcon from '@material-ui/icons/Info';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-import Navbar from "../navbar/Navbar"
+import Navbar from '../navbar/Navbar';
+import { getSearchResults } from '../../redux/search/actions';
 
 const useStyles = makeStyles((theme) => ({
     features: {
@@ -47,22 +48,28 @@ export default function SearchPage(props) {
     const classes = useStyles();
     const dispatch = useDispatch();
 
+    const { geometry } = useSelector((state) => state.auth.address);
+
+    useEffect(() => {
+        dispatch(getSearchResults({ geometry }));
+    }, []);
+
     const [delOrPick, setDelOrPick] = useState(true);
     const [sliderVal, setSliderVal] = useState(45);
     const [ratingVal, setRatingVal] = useState(3);
 
     // filters
-    const [crubhub, setcrubhub] = useState(false)
-    const [newest, setnewest] = useState(false)
-    const [free, setfree] = useState(false)
+    const [crubhub, setcrubhub] = useState(false);
+    const [newest, setnewest] = useState(false);
+    const [free, setfree] = useState(false);
 
     //sorting
-    const [select, setselect] = useState("rating")
+    const [select, setselect] = useState('rating');
 
     const searchState = useSelector((state) => state.search);
 
-    console.log(searchState)
-    console.log(ratingVal)
+    // console.log(searchState);
+    // console.log(ratingVal);
 
     // useEffect(() => {
     //     console.log(ratingVal);
@@ -82,7 +89,6 @@ export default function SearchPage(props) {
         }
     };
 
-
     return (
         <div>
             <Navbar {...props}></Navbar>
@@ -91,7 +97,7 @@ export default function SearchPage(props) {
                     style={{
                         width: '30%',
                         padding: '20px',
-                        borderRight: "1px solid #e2dff1"
+                        borderRight: '1px solid #e2dff1'
                     }}
                 >
                     <div style={{ display: 'flex', alignItems: 'center' }}>
@@ -181,7 +187,7 @@ export default function SearchPage(props) {
                         <h3 style={{ fontFamily: 'esti' }}>Feature</h3>
                     </div>
 
-                    {/* <div
+                    <div
                         style={{
                             display: 'flex',
                             justifyContent: 'flex-start',
@@ -190,6 +196,9 @@ export default function SearchPage(props) {
                         className={classes.features}
                     >
                         <Checkbox
+                            checked={crubhub}
+                            onChange={(e) => setcrubhub(e.target.checked)}
+                            color="primary"
                             inputProps={{ 'aria-label': 'primary checkbox' }}
                         />
                         <div
@@ -207,7 +216,7 @@ export default function SearchPage(props) {
                             Crubhub+
                         </div>
                     </div>
- */}
+
                     <div
                         style={{
                             display: 'flex',
@@ -222,9 +231,7 @@ export default function SearchPage(props) {
                             onChange={(e) => setnewest(e.target.checked)}
                             inputProps={{ 'aria-label': 'primary checkbox' }}
                         />
-                        <div style={{ fontFamily: 'raleway' }}>
-                            New
-                        </div>
+                        <div style={{ fontFamily: 'raleway' }}>New</div>
                     </div>
 
                     <div
@@ -657,21 +664,31 @@ export default function SearchPage(props) {
                             <option value="delivery">Delivery Time</option>
                         </select>
                     </div>
-                    {searchState.searchResults.filter((item) => newest ? item.is_new === newest : item).filter((item) => free ? item.deliveryFee === 0 : item).filter((item) => item.rating.value >= ratingVal).sort((a, b) => {
-                        if (select === "rating") {
-                            return b.rating.value - a.rating.value
-                        }
-                        else if (select === "deliveryFee") {
-                            return a.deliveryFee - b.deliveryFee
-                        }
-                        else {
-                            return a.avgDeliveryTime - b.avgDeliveryTime
-                        }
-                    }).map((restaurant) => (
-                        <RestaurantItem details={restaurant} />
-                    ))}
+                    {searchState.searchResults
+                        .filter((item) =>
+                            newest ? item.is_new === newest : item
+                        )
+                        .filter((item) =>
+                            free ? item.deliveryFee === 0 : item
+                        )
+                        .filter((item) => item.rating.value >= ratingVal)
+                        .filter((item) =>
+                            crubhub ? item.premium === true : item
+                        )
+                        .sort((a, b) => {
+                            if (select === 'rating') {
+                                return b.rating.value - a.rating.value;
+                            } else if (select === 'deliveryFee') {
+                                return a.deliveryFee - b.deliveryFee;
+                            } else {
+                                return a.avgDeliveryTime - b.avgDeliveryTime;
+                            }
+                        })
+                        .map((restaurant) => (
+                            <RestaurantItem details={restaurant} />
+                        ))}
                 </div>
             </div>
-        </div >
+        </div>
     );
 }

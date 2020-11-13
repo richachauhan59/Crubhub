@@ -433,6 +433,7 @@ function Home(props) {
                         <div className={classes.autoComplete}>
                             <div className={classes.searchBox}>
                                 <Autocomplete
+                                disableClearable
                                     freeSolo
                                     options={options.map(
                                         (place) => place.place_name

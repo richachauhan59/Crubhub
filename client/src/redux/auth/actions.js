@@ -9,6 +9,8 @@ import {
     OAUTH_SUCCESS,
     OAUTH_FAILURE,
     SET_ADDRESS,
+    ADD_TO_CART,
+    CLEAR_CART,
     LOGOUT
 } from './actionTypes';
 
@@ -95,6 +97,15 @@ export const oauthLogin = (data) => (dispatch) => {
 export const setAddress = (payload) => ({
     type: SET_ADDRESS,
     payload
+});
+
+export const addToCart = (payload) => ({
+    type: ADD_TO_CART,
+    payload
+});
+
+export const clearCart = () => ({
+    type: CLEAR_CART
 });
 
 export const logout = () => ({
