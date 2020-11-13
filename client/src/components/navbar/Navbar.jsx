@@ -13,13 +13,17 @@ export default function Navbar(props) {
     const [options, setOptions] = useState([])
     const [searchInput, setSearchInput] = useState('');
     const [box, setbox] = useState(false)
+    const localValue = localStorage.getItem("location", JSON.stringify(searchInput))
+    const any =  [localValue] 
+    const locationValue =any.map(item => item.text)
 
     const openBox = () => {
-        setbox(true)
+        setbox(!box)
     }
 
     const handleInputChange = (value) => {
         setSearchInput(value);
+        console.log(searchInput)
         axios({
             method: 'get',
             url: `https://api.mapbox.com/geocoding/v5/mapbox.places/${value}.json`,
@@ -36,7 +40,6 @@ export default function Navbar(props) {
             });
     };
 
-
     return (
         <div>{props.match.url === "/login" || props.match.url === "/signup" || props.match.url === "/checkout" ?
             < div style={{ height: "60px", boxShadow: "0 0 0 1px rgba(67,41,163,.1),0 1px 8px 0 rgba(67,41,163,.1)", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
@@ -52,7 +55,9 @@ export default function Navbar(props) {
                     </Link>
                     <div style={{ display: "flex", marginLeft: "30px" }}>
                         <LocationOnIcon style={{ height: "16px" }}></LocationOnIcon>
-                        <div style={{ color: "#0070eb", marginLeft: "5px" }}><button onClick={openBox} style={{position:"relative", outline:"none", background:"Transparent", border:"none", cursor:"pointer"}} >San Francisco</button></div>
+                        <div style={{ color: "#0070eb", marginLeft: "5px" }}><button onClick={openBox} style={{position:"relative", outline:"none", background:"Transparent", border:"none", cursor:"pointer"}} >
+                            {locationValue}
+                        </button></div>
                     </div>
                     <div style={{ width: "320px", height: "35px", border: "1px solid #8f8fa1", marginLeft: "30px", borderRadius: '5px', display: "flex", justifyContent: "flex-start", alignItems: "center" }}>
                         <SearchIcon style={{ height: "18px", marginLeft: "10px", color: "#4b4b4b" }}></SearchIcon>
@@ -92,11 +97,8 @@ export default function Navbar(props) {
                                 ...params.InputProps,
                                 type: 'search'
                             }}
-                            onChange={(e) =>
-                                handleInputChange(
-                                    e.target.value
-                                )
-                            }
+                            value={locationValue}
+                            onChange={(e) => handleInputChange( e.target.value)}
                         />
                     )}
                 />:
