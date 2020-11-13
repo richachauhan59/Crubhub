@@ -9,15 +9,18 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
 import axios from 'axios';
-import { getSearchResults } from '../../redux/search/actions';
 import { clearCart } from '../../redux/auth/actions';
 import { useSelector, useDispatch } from 'react-redux';
+import { getSearchResults } from '../../redux/search/actions';
+import { setAddress } from '../../redux/auth/actions';
+import {useHistory} from 'react-router-dom'
 
 export default function Navbar(props) {
     const dispatch = useDispatch();
+    const history = useHistory();
 
     const { geometry } = useSelector((state) => state.auth.address);
-    const { firstName, authToken, cart } = useSelector((state) => state.auth);
+    const { firstName, authToken, cart, address } = useSelector((state) => state.auth);
 
     const [options, setOptions] = useState([]);
     const [searchInput, setSearchInput] = useState('');
@@ -25,8 +28,17 @@ export default function Navbar(props) {
     const [cuisine, setCuisine] = useState('');
     const [openCart, setOpenCart] = useState(false);
 
+    const findFood = (e) => {
+        e.preventDefault()
+        dispatch(setAddress(searchInput));
+        dispatch(getSearchResults({ geometry: searchInput.geometry }));
+        setTimeout(() => {
+            history.push('/search');
+        }, 600);
+    };
+
     const openBox = () => {
-        setbox(true);
+        setbox(!box);
     };
 
     const handleInputChange = (value) => {
@@ -143,7 +155,7 @@ export default function Navbar(props) {
                                         cursor: 'pointer'
                                     }}
                                 >
-                                    San Francisco
+                                    {address.place[0]}
                                 </button>
                             </div>
                         </div>
@@ -398,6 +410,7 @@ export default function Navbar(props) {
                 }}
             >
                 {box ? (
+                    <form onSubmit={findFood}>
                     <Autocomplete
                     disableClearable
                         freeSolo
@@ -425,6 +438,7 @@ export default function Navbar(props) {
                             />
                         )}
                     />
+                    </form>
                 ) : (
                     <div></div>
                 )}

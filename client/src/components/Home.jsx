@@ -351,7 +351,6 @@ function Home(props) {
     const [searchInput, setSearchInput] = useState('');
 
     const findFood = (e) => {
-        localStorage.setItem("location", JSON.stringify(searchInput))
         dispatch(setAddress(searchInput));
         dispatch(getSearchResults({ geometry: searchInput.geometry }));
         setTimeout(() => {
