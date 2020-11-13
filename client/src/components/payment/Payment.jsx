@@ -20,8 +20,7 @@ const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
     root: {
-        display: 'flex',
-        marginTop: theme.spacing(5)
+        display: 'flex'
     },
     appBar: {
         width: `calc(100% - ${drawerWidth}px)`,
@@ -35,7 +34,9 @@ const useStyles = makeStyles((theme) => ({
         zIndex: '-1'
         // marginTop: '60px'
     },
-    toolbar: theme.mixins.toolbar,
+    toolbar: {
+        height: '60px'
+    },
     content: {
         flexGrow: 1,
         backgroundColor: theme.palette.background.default,
@@ -77,6 +78,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Payment(props) {
+    document.title = 'Checkout | Crubhub';
+
     const classes = useStyles();
 
     let Mozzarella_Sticks = 8;
@@ -252,7 +255,6 @@ export default function Payment(props) {
                     anchor="right"
                 >
                     <div className={classes.toolbar} />
-                    {/* style={{ marginTop: '-64px' }} */}
                     <Divider />
                     <List>
                         <ListItem>

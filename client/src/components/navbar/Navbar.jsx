@@ -12,8 +12,29 @@ import axios from 'axios';
 import { getSearchResults } from '../../redux/search/actions';
 import { clearCart } from '../../redux/auth/actions';
 import { useSelector, useDispatch } from 'react-redux';
+import { makeStyles } from '@material-ui/styles';
+
+const useStyles = makeStyles((theme) => ({
+    cart: {
+        fontSize: '16px',
+        fontFamily: 'esti',
+        color: 'white',
+        textAlign: 'center',
+        width: '100%',
+        padding: '10px 0',
+        background: '#13aa37',
+        border: 'none',
+        borderRadius: '5px',
+        cursor: 'pointer',
+        transition: 'background 0.3s ease',
+        '&:hover': {
+            background: '#0e7c28'
+        }
+    }
+}));
 
 export default function Navbar(props) {
+    const classes = useStyles();
     const dispatch = useDispatch();
 
     const { geometry } = useSelector((state) => state.auth.address);
@@ -58,14 +79,17 @@ export default function Navbar(props) {
     };
 
     return (
-        <div style={{ background: 'white' }}>
+        <React.Fragment>
             {props.match.url === '/login' ||
             props.match.url === '/signup' ||
             props.match.url === '/checkout' ? (
                 <div
                     style={{
                         height: '60px',
+                        position: 'fixed',
+                        width: '100%',
                         background: '#ffffff',
+                        zIndex: '2',
                         boxShadow:
                             '0 0 0 1px rgba(67,41,163,.1),0 1px 8px 0 rgba(67,41,163,.1)',
                         display: 'flex',
@@ -110,6 +134,10 @@ export default function Navbar(props) {
                 <div
                     style={{
                         height: '60px',
+                        position: 'fixed',
+                        background: 'white',
+                        zIndex: '2',
+                        width: '100%',
                         boxShadow:
                             '0 0 0 1px rgba(67,41,163,.1),0 1px 8px 0 rgba(67,41,163,.1)',
                         display: 'flex',
@@ -246,11 +274,11 @@ export default function Navbar(props) {
                                     visibility: openCart ? 'visible' : 'hidden',
                                     opacity: openCart ? '1' : '0',
                                     background: 'white',
-                                    height: '330px',
+                                    height: 'auto',
                                     width: '300px',
                                     borderRadius: '5px',
                                     border: '1px solid #cbc4e6',
-                                    bottom: '-345px',
+                                    bottom: '-390px',
                                     right: '-10px',
                                     zIndex: '3',
                                     transition:
@@ -322,30 +350,51 @@ export default function Navbar(props) {
                                             cart.map((item) => (
                                                 <div
                                                     style={{
-                                                        padding: '00px 15px',
+                                                        padding: '5px 15px',
                                                         borderBottom:
                                                             '1px solid #cbc4e6',
                                                         display: 'flex',
                                                         alignItems: 'center',
                                                         fontFamily:
                                                             'sans-serif',
+                                                        color: '#222',
                                                         fontSize: '15px'
                                                     }}
                                                 >
-                                                    <div>{item.quantity}</div>
+                                                    <div
+                                                        style={{ flex: '0.5' }}
+                                                    >
+                                                        {item.quantity}
+                                                    </div>
                                                     <div
                                                         style={{
-                                                            color: '#0070eb'
+                                                            color: '#0070eb',
+                                                            flex: '2'
                                                         }}
                                                     >
                                                         {item.name}
                                                     </div>
-                                                    <div>
+                                                    <div style={{ flex: '0' }}>
                                                         <IconButton aria-label="delete">
-                                                            <DeleteIcon />
+                                                            <DeleteIcon
+                                                                style={{
+                                                                    fontSize:
+                                                                        '16px'
+                                                                }}
+                                                            />
                                                         </IconButton>
                                                     </div>
-                                                    <div>${item.totalCost}</div>
+                                                    <div
+                                                        style={{
+                                                            flex: '1',
+                                                            textAlign: 'right'
+                                                        }}
+                                                    >
+                                                        $
+                                                        {item.totalCost.toFixed(
+                                                            2
+                                                        )}
+                                                    </div>
                                                 </div>
                                             ))
                                         ) : (
@@ -378,6 +427,42 @@ export default function Navbar(props) {
                                         }}
                                     >
                                         Your bag is empty
+                                    </div>
+                                    <div
+                                        style={{
+                                            padding: '15px',
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            justifyContent: 'space-between',
+                                            fontSize: '15px',
+                                            color: '#222',
+                                            fontFamily: 'sans-serif',
+                                            borderBottom: '1px solid #cbc4e6'
+                                        }}
+                                    >
+                                        <div>Items subtotal:</div>
+                                        <div>
+                                            $
+                                            {cart
+                                                .reduce(
+                                                    (a, c) => a + c.totalCost,
+                                                    0
+                                                )
+                                                .toFixed(2)}
+                                        </div>
+                                    </div>
+                                    <div style={{ padding: '15px' }}>
+                                        <div className={classes.cart}>
+                                            <Link
+                                                to="/checkout"
+                                                style={{
+                                                    textDecoration: 'none',
+                                                    color: 'white'
+                                                }}
+                                            >
+                                                Proceed to Checkout
+                                            </Link>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -427,6 +512,6 @@ export default function Navbar(props) {
                     <div></div>
                 )}
             </div>
-        </div>
+        </React.Fragment>
     );
 }

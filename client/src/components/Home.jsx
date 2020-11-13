@@ -342,7 +342,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function Home(props) {
-
     const classes = useStyles();
     const dispatch = useDispatch();
     const history = useHistory();
@@ -351,7 +350,7 @@ function Home(props) {
     const [searchInput, setSearchInput] = useState('');
 
     const findFood = (e) => {
-        localStorage.setItem("location", JSON.stringify(searchInput))
+        localStorage.setItem('location', JSON.stringify(searchInput));
         dispatch(setAddress(searchInput));
         dispatch(getSearchResults({ geometry: searchInput.geometry }));
         setTimeout(() => {
