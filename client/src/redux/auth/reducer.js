@@ -200,7 +200,22 @@ const reducer = (state = initialState, action) => {
         case LOGOUT: {
             //resets localStorage and state
             localStorage.clear();
-            return initialState;
+            return {
+                firstName: '',
+                lastName: '',
+                email: '',
+                address: {},
+                orders: [],
+                payments: {},
+                cart: [],
+                authToken: '',
+                loginloading: false,
+                loginError: '',
+                registerloading: false,
+                registerError: '',
+                oauthError: '',
+                oauthLoading: false
+            };
         }
         default:
             return state;

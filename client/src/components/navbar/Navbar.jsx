@@ -8,11 +8,20 @@ import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
+import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
+import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
+import HistoryIcon from '@material-ui/icons/History';
+//import SettingsIcon from '@material-ui/icons/Settings';
 import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
 import { makeStyles } from '@material-ui/styles';
 import { getSearchResults } from '../../redux/search/actions';
-import { setAddress, deleteItem, clearCart } from '../../redux/auth/actions';
+import {
+    setAddress,
+    deleteItem,
+    clearCart,
+    logout
+} from '../../redux/auth/actions';
 import { useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
@@ -49,6 +58,7 @@ export default function Navbar(props) {
     const [box, setbox] = useState(false);
     const [cuisine, setCuisine] = useState('');
     const [openCart, setOpenCart] = useState(false);
+    const [openOptions, setOpenOptions] = useState(false);
 
     const findFood = (e) => {
         setbox(!box);
@@ -174,12 +184,12 @@ export default function Navbar(props) {
                         </Link>
                         <div
                             style={{
-                                display: 'flex',
                                 marginLeft: '30px',
+                                alignItems: 'center',
                                 display:
                                     props.match.url === '/lets-eat'
                                         ? 'none'
-                                        : 'block'
+                                        : 'flex'
                             }}
                         >
                             <LocationOnIcon
@@ -198,7 +208,7 @@ export default function Navbar(props) {
                                         cursor: 'pointer'
                                     }}
                                 >
-                                    {address.place[0]}
+                                    {address.place ? address.place[0] : ''}
                                 </button>
                             </div>
                         </div>
@@ -209,13 +219,12 @@ export default function Navbar(props) {
                                 border: '1px solid #8f8fa1',
                                 marginLeft: '30px',
                                 borderRadius: '5px',
-                                display: 'flex',
                                 justifyContent: 'flex-start',
                                 alignItems: 'center',
                                 display:
                                     props.match.url === '/lets-eat'
                                         ? 'none'
-                                        : 'block'
+                                        : 'flex'
                             }}
                         >
                             <SearchIcon
@@ -246,10 +255,131 @@ export default function Navbar(props) {
                                 style={{
                                     fontFamily: 'Raleway',
                                     fontSize: '14px',
-                                    color: 'rgb(107, 107, 131)'
+                                    color: 'rgb(107, 107, 131)',
+                                    position: 'relative',
+                                    display: 'flex',
+                                    alignItems: 'center'
                                 }}
                             >
-                                Hi, {firstName}!
+                                <span
+                                    onClick={() => {
+                                        setOpenCart(false);
+                                        setOpenOptions(
+                                            (prevState) => !prevState
+                                        );
+                                    }}
+                                    style={{ cursor: 'pointer' }}
+                                >
+                                    Hi, {firstName}!
+                                </span>
+                                {openOptions ? (
+                                    <KeyboardArrowUpIcon
+                                        onClick={() => {
+                                            setOpenCart(false);
+                                            setOpenOptions(
+                                                (prevState) => !prevState
+                                            );
+                                        }}
+                                        style={{ cursor: 'pointer' }}
+                                    />
+                                ) : (
+                                    <KeyboardArrowDownIcon
+                                        onClick={() => {
+                                            setOpenCart(false);
+                                            setOpenOptions(
+                                                (prevState) => !prevState
+                                            );
+                                        }}
+                                        style={{ cursor: 'pointer' }}
+                                    />
+                                )}
+                                <div
+                                    style={{
+                                        position: 'absolute',
+                                        visibility: openOptions
+                                            ? 'visible'
+                                            : 'hidden',
+                                        opacity: openOptions ? '1' : '0',
+                                        background: 'white',
+                                        height: 'auto',
+                                        width: '200px',
+                                        borderRadius: '5px',
+                                        border: '1px solid #cbc4e6',
+                                        bottom: '-165px',
+                                        right: '-10px',
+                                        zIndex: '3',
+                                        transition:
+                                            'visibility 0.1s, opacity 0.1s linear'
+                                    }}
+                                >
+                                    <div
+                                        name="cart-arrow"
+                                        style={{
+                                            position: 'relative',
+                                            width: '100%'
+                                        }}
+                                    >
+                                        <div
+                                            style={{
+                                                position: 'absolute',
+                                                height: '20px',
+                                                width: '20px',
+                                                top: '-10px',
+                                                right: '20px',
+                                                background: 'white',
+                                                borderTop: '1px solid #cbc4e6',
+                                                borderRight:
+                                                    '1px solid #cbc4e6',
+                                                transform: 'rotate(-45deg)'
+                                            }}
+                                        ></div>
+                                    </div>
+                                    <div
+                                        style={{
+                                            display: 'flex',
+                                            padding: '20px',
+                                            justifyContent: 'center',
+                                            color: '#0070eb',
+                                            textAlign: 'center'
+                                        }}
+                                    >
+                                        <div
+                                            style={{ cursor: 'pointer' }}
+                                            onClick={() =>
+                                                history.push('/orders')
+                                            }
+                                        >
+                                            <HistoryIcon
+                                                style={{ fontSize: '40px' }}
+                                            />
+                                            <div>Past orders</div>
+                                        </div>
+                                        {/* <div>
+                                            <SettingsIcon
+                                                style={{ fontSize: '40px' }}
+                                            />
+                                            <div>Account</div>
+                                        </div> */}
+                                    </div>
+                                    <div
+                                        style={{
+                                            padding: '15px',
+                                            color: 'black',
+                                            borderTop: '1px solid #ccc'
+                                        }}
+                                    >
+                                        Not {firstName}?{' '}
+                                        <span
+                                            onClick={() => dispatch(logout())}
+                                            style={{
+                                                color: '#0070eb',
+                                                cursor: 'pointer'
+                                            }}
+                                        >
+                                            Sign Out
+                                        </span>
+                                    </div>
+                                </div>
                             </span>
                         ) : (
                             <Link
@@ -284,9 +414,10 @@ export default function Navbar(props) {
                                     borderRadius: '5px',
                                     cursor: 'pointer'
                                 }}
-                                onClick={() =>
-                                    setOpenCart((prevState) => !prevState)
-                                }
+                                onClick={() => {
+                                    setOpenOptions(false);
+                                    setOpenCart((prevState) => !prevState);
+                                }}
                             />
                             <span
                                 style={{
@@ -294,9 +425,10 @@ export default function Navbar(props) {
                                     fontFamily: 'Raleway',
                                     display: cart.length > 0 ? 'block' : 'none'
                                 }}
-                                onClick={() =>
-                                    setOpenCart((prevState) => !prevState)
-                                }
+                                onClick={() => {
+                                    setOpenOptions(false);
+                                    setOpenCart((prevState) => !prevState);
+                                }}
                             >
                                 {cart.length}
                             </span>
