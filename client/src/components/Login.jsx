@@ -121,7 +121,7 @@ export default function Login(props) {
                         <button
                             type="submit"
                             className={styles.button}
-                            style={{ position: 'relative' }}
+                            style={{ position: 'relative', cursor: 'pointer' }}
                         >
                             <img
                                 src="/grubhub_logo.svg"
@@ -138,7 +138,13 @@ export default function Login(props) {
                         </button>
                     </form>
                     <div>or</div>
-                    <div style={{ position: 'relative', height: '60px' }}>
+                    <div
+                        style={{
+                            position: 'relative',
+                            height: '60px',
+                            cursor: 'pointer'
+                        }}
+                    >
                         <FacebookIcon
                             style={{
                                 position: 'absolute',
@@ -158,7 +164,13 @@ export default function Login(props) {
                             callback={responseFacebook}
                         />
                     </div>
-                    <div style={{ position: 'relative', height: '60px' }}>
+                    <div
+                        style={{
+                            position: 'relative',
+                            height: '60px',
+                            cursor: 'pointer'
+                        }}
+                    >
                         <img
                             src="/google_logo.svg"
                             alt=""

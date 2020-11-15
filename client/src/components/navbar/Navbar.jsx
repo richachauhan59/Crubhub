@@ -101,6 +101,9 @@ export default function Navbar(props) {
                 cuisine: cuisine[0]?.toUpperCase() + cuisine?.slice(1)
             })
         );
+        setTimeout(() => {
+            history.push('/search');
+        }, 600);
     };
 
     return (
@@ -192,9 +195,11 @@ export default function Navbar(props) {
                                         : 'flex'
                             }}
                         >
-                            <LocationOnIcon
-                                style={{ height: '16px' }}
-                            ></LocationOnIcon>
+                            <div onClick={openBox}>
+                                <LocationOnIcon
+                                    style={{ height: '16px' }}
+                                ></LocationOnIcon>
+                            </div>
                             <div
                                 style={{ color: '#0070eb', marginLeft: '5px' }}
                             >

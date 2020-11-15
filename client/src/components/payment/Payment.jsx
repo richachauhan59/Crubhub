@@ -17,7 +17,7 @@ import Fade from '@material-ui/core/Fade';
 import { Link, useHistory } from 'react-router-dom';
 import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
-import { clearCart } from '../../redux/auth/actions';
+import { clearCart, saveOrder } from '../../redux/auth/actions';
 
 const drawerWidth = 240;
 
@@ -108,7 +108,7 @@ export default function Payment(props) {
 
     let total = 0;
 
-    const { cart, authToken } = useSelector((state) => state.auth);
+    const { cart, authToken, email } = useSelector((state) => state.auth);
 
     const [addressType, setAddressType] = useState('home');
     const [open, setOpen] = React.useState(false);
@@ -169,6 +169,17 @@ export default function Payment(props) {
                             setTimeout(() => {
                                 history.push('/orders');
                                 dispatch(clearCart());
+                                dispatch(
+                                    saveOrder({
+                                        total: (
+                                            total +
+                                            4.99 +
+                                            0.1 * total
+                                        ).toFixed(2),
+                                        email,
+                                        restaurant: restaurant_id
+                                    })
+                                );
                             }, 2000);
                         }
                     } catch (error) {

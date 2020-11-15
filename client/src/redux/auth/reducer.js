@@ -12,6 +12,7 @@ import {
     ADD_TO_CART,
     CLEAR_CART,
     DELETE_ITEM,
+    SAVE_ORDER,
     LOGOUT
 } from './actionTypes';
 
@@ -84,7 +85,8 @@ const reducer = (state = initialState, action) => {
                     firstName: action.payload.firstName,
                     lastName: action.payload.lastName,
                     email: action.payload.email,
-                    authToken: action.payload.authToken
+                    authToken: action.payload.authToken,
+                    orders: action.payload.orders
                 })
             );
             return {
@@ -94,6 +96,7 @@ const reducer = (state = initialState, action) => {
                 lastName: action.payload.lastName,
                 email: action.payload.email,
                 authToken: action.payload.authToken,
+                orders: action.payload.orders,
                 loginLoading: false,
                 loginError: ''
             };
@@ -185,7 +188,6 @@ const reducer = (state = initialState, action) => {
                 cart: []
             };
         case DELETE_ITEM: {
-            console.log(action.payload);
             let del_item = state.cart.findIndex(
                 (item) => item.name === action.payload
             );
@@ -196,6 +198,13 @@ const reducer = (state = initialState, action) => {
                 JSON.stringify({ ...state, cart: new_cart })
             );
             return { ...state, cart: new_cart };
+        }
+        case SAVE_ORDER: {
+            localStorage.setItem(
+                'user',
+                JSON.stringify({ ...state, orders: action.payload })
+            );
+            return { ...state, orders: action.payload };
         }
         case LOGOUT: {
             //resets localStorage and state

@@ -10,6 +10,7 @@ const {
 const {
     restaurantSearch,
     restaurantDetails,
+    saveOrderDetails,
     createPaymentInstance,
     capturePaymentId
 } = require('../controllers/restaurantController');
@@ -24,6 +25,7 @@ router.post('/login', loginController);
 router.post('/Oauth', OauthController);
 router.post('/search', restaurantSearch);
 router.get('/restaurant/:id', restaurantDetails);
+router.post('/saveOrder', saveOrderDetails);
 router.post('/order', createPaymentInstance);
 router.post('/capture/:paymentId', capturePaymentId);
 //router.use(authenticationToken);
