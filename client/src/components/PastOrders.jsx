@@ -8,7 +8,6 @@ import { Link } from 'react-router-dom';
 
 function Order({ details }) {
     const classes = useStyles();
-    const date = details.date.split(' ');
     return (
         <div
             style={{
@@ -54,7 +53,7 @@ function Order({ details }) {
                         <h2 style={{ fontFamily: 'esti', color: 'black' }}>
                             {details.restaurant}
                         </h2>
-                        <div>{`${date[0]}, ${date[1]} ${date[2]}, ${date[3]}`}</div>
+                        <div>{details.date}</div>
                     </div>
                     <div>{details.address}</div>
                 </div>
