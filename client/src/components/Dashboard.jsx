@@ -7,10 +7,11 @@ import AccessTimeIcon from '@material-ui/icons/AccessTime';
 import RoomIcon from '@material-ui/icons/Room';
 import SearchIcon from '@material-ui/icons/Search';
 import axios from 'axios';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { setAddress } from '../redux/auth/actions';
 import { getSearchResults } from '../redux/search/actions';
 import { useHistory } from 'react-router';
+import Navbar from './navbar/Navbar';
 
 const useStyles = makeStyles((theme) => ({
     footerWrapper: {
@@ -162,6 +163,7 @@ const useStyles = makeStyles((theme) => ({
         backgroundImage: 'url(homepage_banner.webp)',
         backgroundColor: '#777',
         padding: '52px 20px',
+        marginTop: '60px',
         width: '100%',
         height: '312.4px',
         position: 'relative',
@@ -298,7 +300,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-function Dashboard() {
+function Dashboard(props) {
     document.title =
         'Food Delivery | Restaurant Takeout | Order Food Online | Crubhub';
 
@@ -306,10 +308,16 @@ function Dashboard() {
     const dispatch = useDispatch();
     const history = useHistory();
 
+    const { place, geometry } = useSelector((state) => state.auth.address);
+
     const [delOrPick, setDelOrPick] = useState('delivery');
     const [options, setOptions] = useState([]);
-    const [searchInput, setSearchInput] = useState('');
-    const [valueText, setValueText] = useState('');
+    const [searchInput, setSearchInput] = useState(
+        place.length > 0 ? { place_name: place.join(', '), geometry } : ''
+    );
+    const [valueText, setValueText] = useState(
+        place.length > 0 ? place.join(', ') : ''
+    );
     const [cuisineInput, setCuisineInput] = useState('');
 
     const handleInputChange = (value) => {
@@ -345,7 +353,7 @@ function Dashboard() {
     };
     return (
         <div>
-            {/* <Navbar/> */}
+            <Navbar {...props} />
 
             <div className={classes.banner}>
                 <div className={classes.bannerText}>

@@ -9,11 +9,10 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
 import axios from 'axios';
-import { clearCart } from '../../redux/auth/actions';
 import { useSelector, useDispatch } from 'react-redux';
 import { makeStyles } from '@material-ui/styles';
 import { getSearchResults } from '../../redux/search/actions';
-import { setAddress } from '../../redux/auth/actions';
+import { setAddress, deleteItem, clearCart } from '../../redux/auth/actions';
 import { useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
@@ -173,7 +172,16 @@ export default function Navbar(props) {
                                 alt="logo"
                             ></img>
                         </Link>
-                        <div style={{ display: 'flex', marginLeft: '30px' }}>
+                        <div
+                            style={{
+                                display: 'flex',
+                                marginLeft: '30px',
+                                display:
+                                    props.match.url === '/lets-eat'
+                                        ? 'none'
+                                        : 'block'
+                            }}
+                        >
                             <LocationOnIcon
                                 style={{ height: '16px' }}
                             ></LocationOnIcon>
@@ -203,7 +211,11 @@ export default function Navbar(props) {
                                 borderRadius: '5px',
                                 display: 'flex',
                                 justifyContent: 'flex-start',
-                                alignItems: 'center'
+                                alignItems: 'center',
+                                display:
+                                    props.match.url === '/lets-eat'
+                                        ? 'none'
+                                        : 'block'
                             }}
                         >
                             <SearchIcon
@@ -395,7 +407,16 @@ export default function Navbar(props) {
                                                         {item.name}
                                                     </div>
                                                     <div style={{ flex: '0' }}>
-                                                        <IconButton aria-label="delete">
+                                                        <IconButton
+                                                            aria-label="delete"
+                                                            onClick={() =>
+                                                                dispatch(
+                                                                    deleteItem(
+                                                                        item.name
+                                                                    )
+                                                                )
+                                                            }
+                                                        >
                                                             <DeleteIcon
                                                                 style={{
                                                                     fontSize:

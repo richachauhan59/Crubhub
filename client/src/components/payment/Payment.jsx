@@ -14,8 +14,9 @@ import { TextField } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 import Navbar from '../navbar/Navbar';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import axios from 'axios';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
+import { useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 const drawerWidth = 240;
@@ -33,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
     },
     drawerPaper: {
         width: '450px',
-        zIndex: '-1'
+        zIndex: '0'
         // marginTop: '60px'
     },
     toolbar: {
@@ -83,10 +84,11 @@ export default function Payment(props) {
     document.title = 'Checkout | Crubhub';
 
     const classes = useStyles();
+    const history = useHistory();
 
     let total = 0;
 
-    const cart = useSelector((state) => state.auth.cart);
+    const { cart, authToken } = useSelector((state) => state.auth);
 
     const restaurant_id =
         JSON.parse(localStorage.getItem('restaurant_id')) ||
@@ -94,6 +96,10 @@ export default function Payment(props) {
 
     const handlePayment = async (e) => {
         e.preventDefault();
+        if (authToken === '') {
+            history.push('/login');
+            return;
+        }
         try {
             const { data } = await axios({
                 method: 'POST',
@@ -231,6 +237,7 @@ export default function Payment(props) {
                         />
                         <div className={`${classes.root} ${classes.forBtnDiv}`}>
                             <button
+                                type="button"
                                 className={classes.forBtn}
                                 style={{
                                     backgroundColor: '#0271eb',
@@ -239,8 +246,12 @@ export default function Payment(props) {
                             >
                                 Home
                             </button>
-                            <button className={classes.forBtn}>Work</button>
-                            <button className={classes.forBtn}>Other</button>
+                            <button type="button" className={classes.forBtn}>
+                                Work
+                            </button>
+                            <button type="button" className={classes.forBtn}>
+                                Other
+                            </button>
                         </div>
                         <button
                             type="submit"
@@ -346,7 +357,7 @@ export default function Payment(props) {
                             color: 'white'
                         }}
                     >
-                        <div
+                        <Link
                             style={{
                                 background: '#0070eb',
                                 padding: '3px',
@@ -358,12 +369,13 @@ export default function Payment(props) {
                                 textDecoration: 'none',
                                 cursor: 'pointer'
                             }}
+                            to={`/restaurant/${restaurant_id}`}
                         >
                             <ChevronLeftIcon />
                             <div style={{ fontSize: '18px' }}>
                                 Modify your order
                             </div>
-                        </div>
+                        </Link>
                         <div
                             style={{
                                 background: '#545470',

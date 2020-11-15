@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import StarBorderIcon from '@material-ui/icons/StarBorder';
 import { makeStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
@@ -158,6 +158,12 @@ export default function Restaurant(props) {
     const dispatch = useDispatch();
     const location = useLocation();
 
+    const menuRef = useRef(null);
+    const aboutRef = useRef(null);
+    const reviewsRef = useRef(null);
+
+    const [focus, setFocus] = useState('menu');
+
     const restaurant = useSelector((state) => state.search.restaurantDetails);
     const loading = useSelector(
         (state) => state.search.restaurantDetailsLoading
@@ -304,8 +310,15 @@ export default function Restaurant(props) {
                                     style={{
                                         fontFamily: 'esti',
                                         marginLeft: '12px',
-                                        borderBottom: '3px solid #0070eb',
+                                        borderBottom:
+                                            focus === 'menu'
+                                                ? '3px solid #0070eb'
+                                                : 'none',
                                         padding: '10px 0'
+                                    }}
+                                    onClick={() => {
+                                        setFocus('menu');
+                                        menuRef.current.scrollIntoView();
                                     }}
                                 >
                                     Menu
@@ -314,7 +327,15 @@ export default function Restaurant(props) {
                                     style={{
                                         fontFamily: 'esti',
                                         marginLeft: '12px',
+                                        borderBottom:
+                                            focus === 'about'
+                                                ? '3px solid #0070eb'
+                                                : 'none',
                                         padding: '10px 0'
+                                    }}
+                                    onClick={() => {
+                                        setFocus('about');
+                                        aboutRef.current.scrollIntoView();
                                     }}
                                 >
                                     About
@@ -323,7 +344,15 @@ export default function Restaurant(props) {
                                     style={{
                                         fontFamily: 'esti',
                                         marginLeft: '12px',
+                                        borderBottom:
+                                            focus === 'reviews'
+                                                ? '3px solid #0070eb'
+                                                : 'none',
                                         padding: '10px 0'
+                                    }}
+                                    onClick={() => {
+                                        setFocus('reviews');
+                                        reviewsRef.current.scrollIntoView();
                                     }}
                                 >
                                     Reviews
@@ -350,13 +379,17 @@ export default function Restaurant(props) {
                                 width: '75%',
                                 margin: '20px auto'
                             }}
+                            id="#menu"
+                            ref={menuRef}
                         >
                             {restaurant.menu_category_list.map((category) => (
                                 <MenuCategory details={category} />
                             ))}
 
                             <div
+                                id="#about"
                                 style={{ textAlign: 'left', marginTop: '50px' }}
+                                ref={aboutRef}
                             >
                                 <h1 style={{ fontFamily: 'esti' }}>
                                     {restaurant.name} Info
@@ -364,7 +397,8 @@ export default function Restaurant(props) {
                                 <div
                                     style={{
                                         color: '#0070eb',
-                                        marginTop: '10px'
+                                        marginTop: '10px',
+                                        width: '55%'
                                     }}
                                 >
                                     {restaurant.cuisines.join(', ')}
@@ -541,7 +575,11 @@ export default function Restaurant(props) {
                             <div
                                 style={{ marginTop: '35px', textAlign: 'left' }}
                             >
-                                <div style={{ marginTop: '35px' }}>
+                                <div
+                                    style={{ marginTop: '35px' }}
+                                    id="#reviews"
+                                    ref={reviewsRef}
+                                >
                                     <h1
                                         className={styles.esti}
                                         style={{ marginBottom: '40px' }}
