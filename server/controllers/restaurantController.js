@@ -71,7 +71,12 @@ const saveOrderDetails = async (req, res) => {
                 image: restaurant.searchImage,
                 address: `${restaurant.address.street_address}, ${restaurant.address.address_locality}`,
                 cost: req.body.total,
-                date: date.toDateString()
+                date: date.toLocaleDateString('en-IN', {
+                    weekday: 'short',
+                    year: 'numeric',
+                    month: 'short',
+                    day: 'numeric'
+                })
             },
             ...user.orders
         ];
