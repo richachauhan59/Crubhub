@@ -1,8 +1,19 @@
 import React from 'react';
+import { makeStyles } from '@material-ui/core/styles';
 import Rating from '@material-ui/lab/Rating';
 import { Link } from 'react-router-dom';
 
+const useStyles = makeStyles((theme) => ({
+    restaurantLink: {
+        transition: 'background 0.2s ease',
+        '&:hover': {
+            background: '#fbfbfc'
+        }
+    }
+}));
+
 export default function RestaurantItem({ details }) {
+    const classes = useStyles();
     return (
         <div>
             <Link
@@ -13,8 +24,9 @@ export default function RestaurantItem({ details }) {
                 }}
             >
                 <div
+                    className={classes.restaurantLink}
                     style={{
-                        margin: '10px 20px',
+                        padding: '10px 20px',
                         display: 'flex',
                         justifyContent: 'flex-start',
                         alignItems: 'center'

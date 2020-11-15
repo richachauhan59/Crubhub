@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Restaurants = require('../models/restaurant');
+const Users = require('../models/user');
 const { v4: uuidv4 } = require('uuid');
 const Razorpay = require('razorpay');
 const request = require('request');
@@ -57,6 +58,32 @@ const restaurantDetails = async (req, res) => {
     }
 };
 
+const saveOrderDetails = async (req, res) => {
+    try {
+        const id = mongoose.Types.ObjectId(req.body.restaurant);
+        let restaurant = await Restaurants.findOne({ _id: id });
+        let user = await Users.findOne({ email: req.body.email });
+        let date = new Date();
+        user.orders = [
+            {
+                restaurant: restaurant.name,
+                restaurantId: id,
+                image: restaurant.searchImage,
+                address: `${restaurant.address.street_address}, ${restaurant.address.address_locality}`,
+                cost: req.body.total,
+                date: date.toDateString()
+            },
+            ...user.orders
+        ];
+        await user.save();
+        res.json(user.orders);
+    } catch (error) {
+        res.status(500).json({
+            message: error.message
+        });
+    }
+};
+
 const instance = new Razorpay({
     key_id: process.env.RAZOR_PAY_KEY_ID,
     key_secret: process.env.RAZOR_PAY_KEY_SECRET
@@ -105,6 +132,7 @@ const capturePaymentId = (req, res) => {
 module.exports = {
     restaurantSearch,
     restaurantDetails,
+    saveOrderDetails,
     createPaymentInstance,
     capturePaymentId
 };

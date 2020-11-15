@@ -12,6 +12,7 @@ import {
     ADD_TO_CART,
     CLEAR_CART,
     DELETE_ITEM,
+    SAVE_ORDER,
     LOGOUT
 } from './actionTypes';
 
@@ -113,6 +114,22 @@ export const deleteItem = (payload) => ({
     type: DELETE_ITEM,
     payload
 });
+
+export const saveOrderSuccess = (payload) => ({
+    type: SAVE_ORDER,
+    payload
+});
+
+export const saveOrder = (data) => (dispatch) => {
+    return axios({
+        method: 'POST',
+        url: 'http://localhost:5000/api/saveOrder',
+        headers: { 'content-type': 'application/json' },
+        data
+    })
+        .then((res) => dispatch(saveOrderSuccess(res.data)))
+        .catch((err) => console.log(err.response.data));
+};
 
 export const logout = () => ({
     type: LOGOUT,

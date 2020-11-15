@@ -72,7 +72,13 @@ export default function Routes(props) {
                 <Route
                     exact
                     path="/orders"
-                    render={(props) => <PastOrders {...props} />}
+                    render={(props) =>
+                        authToken !== '' ? (
+                            <PastOrders {...props} />
+                        ) : (
+                            <Redirect to="/login" />
+                        )
+                    }
                 />
                 <Route
                     path="*"

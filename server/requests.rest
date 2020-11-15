@@ -32,3 +32,12 @@ Content-Type: application/json
 }
 ###
 GET http://localhost:5000/api/restaurant/5fab9241b9d43a2c3471da76
+###
+POST http://localhost:5000/api/saveOrder
+Content-Type: application/json
+
+{
+    "restaurant": "5fab9241b9d43a2c3471da76",
+    "email": "zl@gmail.com",
+    "total": "45.00"
+}
