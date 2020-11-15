@@ -308,7 +308,8 @@ function Dashboard(props) {
     const dispatch = useDispatch();
     const history = useHistory();
 
-    const { place, geometry } = useSelector((state) => state.auth.address);
+    let { place, geometry } = useSelector((state) => state.auth.address);
+    place = place || [];
 
     const [delOrPick, setDelOrPick] = useState('delivery');
     const [options, setOptions] = useState([]);

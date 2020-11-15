@@ -8,6 +8,7 @@ import Dashboard from '../components/Dashboard';
 import Restaurant from '../components/Restaurant';
 import SearchPage from '../components/searchPage/SearchPage';
 import PaymentPage from '../components/payment/Payment';
+import PastOrders from '../components/PastOrders';
 
 export default function Routes(props) {
     const { authToken } = useSelector((state) => state.auth);
@@ -67,6 +68,11 @@ export default function Routes(props) {
                     exact
                     path="/checkout"
                     render={(props) => <PaymentPage {...props} />}
+                />
+                <Route
+                    exact
+                    path="/orders"
+                    render={(props) => <PastOrders {...props} />}
                 />
                 <Route
                     path="*"
