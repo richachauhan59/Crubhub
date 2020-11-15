@@ -11,6 +11,7 @@ import {
     SET_ADDRESS,
     ADD_TO_CART,
     CLEAR_CART,
+    DELETE_ITEM,
     LOGOUT
 } from './actionTypes';
 
@@ -106,6 +107,11 @@ export const addToCart = (payload) => {
 
 export const clearCart = () => ({
     type: CLEAR_CART
+});
+
+export const deleteItem = (payload) => ({
+    type: DELETE_ITEM,
+    payload
 });
 
 export const logout = () => ({

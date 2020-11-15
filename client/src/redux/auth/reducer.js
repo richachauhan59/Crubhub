@@ -11,6 +11,7 @@ import {
     SET_ADDRESS,
     ADD_TO_CART,
     CLEAR_CART,
+    DELETE_ITEM,
     LOGOUT
 } from './actionTypes';
 
@@ -41,12 +42,26 @@ const reducer = (state = initialState, action) => {
                 registerLoading: true
             };
         case REGISTER_SUCCESS:
-            localStorage.setItem('user', JSON.stringify(action.payload));
+            localStorage.setItem(
+                'user',
+                JSON.stringify({
+                    ...action.payload,
+                    ...state,
+                    firstName: action.payload.firstName,
+                    lastName: action.payload.lastName,
+                    email: action.payload.email,
+                    authToken: action.payload.authToken
+                })
+            );
             return {
+                ...action.payload,
                 ...state,
+                firstName: action.payload.firstName,
+                lastName: action.payload.lastName,
+                email: action.payload.email,
+                authToken: action.payload.authToken,
                 registerLoading: false,
-                registerError: '',
-                ...action.payload
+                registerError: ''
             };
         case REGISTER_FAILURE: {
             return {
@@ -61,12 +76,26 @@ const reducer = (state = initialState, action) => {
                 loginLoading: true
             };
         case LOGIN_SUCCESS: {
-            localStorage.setItem('user', JSON.stringify(action.payload));
+            localStorage.setItem(
+                'user',
+                JSON.stringify({
+                    ...action.payload,
+                    ...state,
+                    firstName: action.payload.firstName,
+                    lastName: action.payload.lastName,
+                    email: action.payload.email,
+                    authToken: action.payload.authToken
+                })
+            );
             return {
+                ...action.payload,
                 ...state,
+                firstName: action.payload.firstName,
+                lastName: action.payload.lastName,
+                email: action.payload.email,
+                authToken: action.payload.authToken,
                 loginLoading: false,
-                loginError: '',
-                ...action.payload
+                loginError: ''
             };
         }
         case LOGIN_FAILURE:
@@ -81,12 +110,26 @@ const reducer = (state = initialState, action) => {
                 oauthLoading: true
             };
         case OAUTH_SUCCESS:
-            localStorage.setItem('user', JSON.stringify(action.payload));
+            localStorage.setItem(
+                'user',
+                JSON.stringify({
+                    ...action.payload,
+                    ...state,
+                    firstName: action.payload.firstName,
+                    lastName: action.payload.lastName,
+                    email: action.payload.email,
+                    authToken: action.payload.authToken
+                })
+            );
             return {
+                ...action.payload,
                 ...state,
+                firstName: action.payload.firstName,
+                lastName: action.payload.lastName,
+                email: action.payload.email,
+                authToken: action.payload.authToken,
                 oauthLoading: false,
-                oauthError: '',
-                ...action.payload
+                oauthError: ''
             };
         case OAUTH_FAILURE:
             return {
@@ -141,7 +184,19 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 cart: []
             };
-
+        case DELETE_ITEM: {
+            console.log(action.payload);
+            let del_item = state.cart.findIndex(
+                (item) => item.name === action.payload
+            );
+            let new_cart = state.cart;
+            new_cart.splice(del_item, 1);
+            localStorage.setItem(
+                'user',
+                JSON.stringify({ ...state, cart: new_cart })
+            );
+            return { ...state, cart: new_cart };
+        }
         case LOGOUT: {
             //resets localStorage and state
             localStorage.clear();

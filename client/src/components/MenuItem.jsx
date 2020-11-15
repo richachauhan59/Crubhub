@@ -250,7 +250,7 @@ export default function MenuItem({ item }) {
                                         fontSize: 'large'
                                     }}
                                 >
-                                    ${totalCost}
+                                    ${totalCost.toFixed(2)}
                                 </div>
                             </button>
                         </div>
