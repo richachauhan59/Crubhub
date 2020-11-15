@@ -1,2 +1,0 @@
-MONGO_URL="mongodb+srv://crubhubAdmin:QsZuR4wJriaFFjJq@cluster0.u3yck.mongodb.net/crubhub?retryWrites=true&w=majority"
-JWT_SECRET="e59f27c7ccec4f349386403e03bb95bcecfefeb54e1a6b8a023107d4f9baf77de3da2602c19553726f1c4da0db942ec140a18ebfab9bf4e966ba2cf6d45f7ec6"
