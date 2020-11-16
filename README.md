@@ -2,7 +2,7 @@
   <br>
   <a href="https://www.crubhub.tk"><img src="https://raw.githubusercontent.com/shreyas-shriyan/cdn/master/CRUBHUB_logo.png" alt="crubhub" width="500"></a>
   <br>
-  <h3 align="center"><a href="https://www.crubhub.tk" target="_blank">www.crubhub.tk</a></h3>
+  <h4 align="center"><a href="https://www.crubhub.tk" target="_blank">www.crubhub.tk</a></h4>
   <br>
 </h1>
 
